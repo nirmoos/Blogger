@@ -1,0 +1,14 @@
+.login-form-container {
+	width: 30%;
+	border: 1px solid black;
+	margin: auto;
+	margin-top: 10%;
+	text-align: center;
+  input {
+    width: 90%;
+    margin: 10px 0;
+  }
+  input[type="submit"] {
+    width: 30%;
+  }
+}

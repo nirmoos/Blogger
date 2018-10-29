@@ -1,0 +1,21 @@
+.signup-form-container {
+	width: 30%;
+	border: 1px solid black;
+	margin: 5% auto;
+	text-align: center;
+	label {
+		margin-left: 10px;
+		display: block;
+		text-align: left;
+	}
+  input {
+    width: 90%;
+		display: block;
+		margin: 0px 10px 10px;
+  }
+  input[type="submit"] {
+    width: 40%;
+		display: block;
+		margin: 20px auto;
+  }
+}

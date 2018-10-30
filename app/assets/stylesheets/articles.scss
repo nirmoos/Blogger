@@ -1,3 +1,57 @@
-// Place all the styles related to the articles controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'bootstrap';
+// @import "font-awesome-sprockets";
+// @import "font-awesome";
+
+.article-main {
+  width: 50%;
+  margin: 20px auto;
+  background-color: #b3b3b3;
+  padding: 5px 10px;
+  .article-creation {
+    div {
+      display: flex;
+      justify-content: flex-end;
+    }
+    input, textarea {
+      width: 100%;
+      display: block;
+      padding: 5px;
+      margin: 5px auto;
+      border: 1px solid black;
+    }
+    input[type="submit"] {
+      width: 120px;
+      display: block;
+      padding: 1px;
+    }
+  }
+}
+hr {
+  margin: 5px auto;
+  background-color: #fff;
+}
+.article-list {
+  background-color: #d9d9d9;
+  border: 1px solid black;
+  padding: 3px 8px;
+}
+.article-list-header {
+  background-color: #f2f2f2;
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+.article-list-body {
+  background-color: #f2f2f2;
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 4px 8px;
+}
+.logout-link {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

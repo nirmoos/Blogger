@@ -10,6 +10,8 @@ gem 'jquery-rails'
 gem 'devise'
 # Postgres
 gem 'pg', '~> 0.18'
+# Font awsome
+gem 'font-awesome-sass', '~> 5.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

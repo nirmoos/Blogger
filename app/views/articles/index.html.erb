@@ -1,0 +1,26 @@
+<% provide(:title, 'home') %>
+
+<div class='logout-link'>
+   <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+</div>
+<main class='article-main'>
+  <section class='article-creation'>
+    <%= form_with scope: :article, url: articles_path, local: true do |form| %>
+      <%= form.text_field :title, placeholder: 'title...' %>
+      <%= form.text_area :content, placeholder: "what's on your mind" %>
+      <div><%= form.submit %></div>
+    <% end %>
+  </section>
+  <% @articles.each do |article| %>
+    <hr>
+    <section class='article-list'>
+      <div class='article-list-header'><%= article.title %></div>
+      <div class='article-list-body'><%= article.content %></div>
+      <!-- <%= link_to 'Edit', edit_article_path(article) %> -->
+      <!-- <%= link_to 'Destroy', article_path(article),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %> -->
+    </section>
+  <% end %>
+
+</main>

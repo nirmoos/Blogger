@@ -54,7 +54,7 @@ hr {
 .account-wrapper {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 20px;
 }
 .account-wrapper {
   cursor: pointer;
@@ -79,4 +79,23 @@ hr {
   color: #fff;
   border-radius: 5px;
   margin-bottom: 5px;
+}
+.search-container {
+  border: 1px solid black;
+  display: inline-block;
+  top: 20px;
+  left: 20px;
+  position: absolute;
+}
+.search-container div {
+  display: inline;
+  padding: 6px 10px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+}
+.search-container input[type=text] {
+  padding: 3px;
+  font-size: 17px;
+  border: none;
 }

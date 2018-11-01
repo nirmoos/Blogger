@@ -13,7 +13,6 @@ class ArticlesController < ApplicationController
 
   def create
     user = User.find(current_user.id)
-    params_hash = article_params
     user.articles.create(article_params)
 
     redirect_to articles_path

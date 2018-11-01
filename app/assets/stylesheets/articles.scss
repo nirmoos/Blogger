@@ -66,14 +66,13 @@ hr {
   display: none;
   background-color: #000;
   border-radius: 0px 0px 6px 6px;
-  margin-top: 7px;
 }
 .logout-link hr {
   width: 90%;
   color: #000;
 }
 .account-icon {
-  display: inline;
+  display: inline-block;
   padding: 5px;
   background-color: #000;
   color: #fff;
@@ -88,7 +87,7 @@ hr {
   position: absolute;
 }
 .search-icon {
-  display: inline;
+  display: inline-block;
   padding: 6px 10px;
   background: #ddd;
   font-size: 17px;

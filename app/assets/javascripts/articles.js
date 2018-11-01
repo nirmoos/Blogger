@@ -8,10 +8,19 @@ function onSearchButtonClick () {
   let text = $('.search-container input').val();
   $.ajax({
     method: "POST",
-    url: "some.php",
-    data: { name: "John", location: "Boston" }
+    url: "search_user",
+    data: { search_text: text }
   })
-  .done(function( msg ) {
-    alert( "Data Saved: " + msg );
+  .done(function ( data ) {
+    let wrapper = $('.search-results').empty().show();
+    for ( let obj of data ){
+      let a = $('<a href='+ '/users/'+ obj.id +'></a>').text(obj.firstname + ' ' + obj.lastname);
+      wrapper.append($('<hr>'), $('<div></div>').append(a));
+    }
   });
 }
+$(function () {
+  $('.search-container input').on('focusout', function() {
+    // $('.search-results').hide();
+  });
+});

@@ -9,19 +9,13 @@
     <%= form_with scope: :article, url: articles_path, local: true do |form| %>
       <%= form.text_field :title, placeholder: 'title...' %>
       <%= form.text_area :content, placeholder: "what's on your mind" %>
-      <div><%= form.submit %></div>
+      <div class='public-or-private'>
+        <%= form.select :ispublic, options_for_select([['Public', true], ['Private', false]]) %>
+        <%= form.submit %>
+      </div>
     <% end %>
   </section>
-  <% @articles.each do |article| %>
-    <hr>
-    <section class='article-list'>
-      <div class='article-list-header'><%= article.title %></div>
-      <div class='article-list-body'><%= article.content %></div>
-      <!-- <%= link_to 'Edit', edit_article_path(article) %> -->
-      <!-- <%= link_to 'Destroy', article_path(article),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %> -->
-    </section>
-  <% end %>
+
+  <%= render 'list_articles' %>
 
 </main>

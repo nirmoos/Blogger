@@ -1,0 +1,40 @@
+.show-user {
+  width: 50%;
+  margin: 20px auto;
+  background-color: #b3b3b3;
+  padding: 10px 10px;
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.show-user-name {
+  background-color: #d9d9d9;
+  font-size: 30px;
+  border: 1px solid black;
+  margin-bottom: 1px;
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 7px;
+}
+.show-user-email {
+  background-color: #d9d9d9;
+  font-size: 13px;
+  border: 1px solid black;
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 2px;
+}
+.show-user-follow {
+  background-color: #d9d9d9;
+  border: 1px solid black;
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+.show-user-follow:hover {
+  background-color: #f2f2f2;
+}
+.show-user-options {
+}

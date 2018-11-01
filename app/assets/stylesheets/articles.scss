@@ -23,7 +23,7 @@
       width: 120px;
       display: block;
       padding: 1px;
-      margin: 0;
+      margin: 0 0 0 8px;
     }
   }
 }
@@ -87,7 +87,7 @@ hr {
   left: 20px;
   position: absolute;
 }
-.search-container div {
+.search-icon {
   display: inline;
   padding: 6px 10px;
   background: #ddd;
@@ -98,4 +98,16 @@ hr {
   padding: 3px;
   font-size: 17px;
   border: none;
+}
+.search-results div {
+  background-color: #b3b3b3;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.search-results hr {
+  width: 95%;
+  margin: 0;
+}
+.search-results {
+  display: none;
 }

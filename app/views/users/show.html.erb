@@ -1,0 +1,16 @@
+<% provide(:title, 'user') %>
+
+<main class='show-user'>
+  <header>
+    <div>
+      <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
+      <div><div class='show-user-email'><%= @user.email %></div></div>
+    </div>
+    <div class='show-user-options'>
+      <div class='show-user-follow'>Follow</div>
+    </div>
+  </header>
+
+  <%= render 'articles/list_articles' %>
+
+</main>

@@ -13,6 +13,7 @@ class ArticlesController < ApplicationController
 
   def create
     user = User.find(current_user.id)
+    params_hash = article_params
     user.articles.create(article_params)
 
     redirect_to articles_path
@@ -42,6 +43,6 @@ class ArticlesController < ApplicationController
 
   private
     def article_params
-      params.require(:article).permit(:title, :content)
+      params.require(:article).permit(:title, :content, :ispublic)
     end
 end

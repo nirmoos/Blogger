@@ -3,7 +3,7 @@
   margin: 20px auto;
   background-color: #b3b3b3;
   padding: 10px 10px;
-  header {
+  header > div:first-child {
     display: flex;
     justify-content: space-between;
   }
@@ -36,5 +36,22 @@
 .show-user-follow:hover {
   background-color: #f2f2f2;
 }
-.show-user-options {
+.show-user-follower-followyee {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.show-user-follower-followyee div {
+  background-color: #d9d9d9;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+.show-user-follower-followyee > div div {
+  text-align: center;
+  padding: 0;
+}
+.show-user-follower-followyee > div:first-child {
+  margin-right: 10px;
 }

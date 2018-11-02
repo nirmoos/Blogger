@@ -5,16 +5,8 @@
 <%= render 'search_bar' %>
 
 <main class='article-main'>
-  <section class='article-creation'>
-    <%= form_with scope: :article, url: articles_path, local: true do |form| %>
-      <%= form.text_field :title, placeholder: 'title...' %>
-      <%= form.text_area :content, placeholder: "what's on your mind" %>
-      <div class='public-or-private'>
-        <%= form.select :ispublic, options_for_select([['Public', true], ['Private', false]]) %>
-        <%= form.submit %>
-      </div>
-    <% end %>
-  </section>
+
+  <%= render 'article_creation' %>
 
   <%= render 'list_articles' %>
 

@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_024259) do
+ActiveRecord::Schema.define(version: 2018_11_02_095138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abcs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "articles", force: :cascade do |t|
     t.bigint "user_id"
@@ -25,12 +30,37 @@ ActiveRecord::Schema.define(version: 2018_11_01_024259) do
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
+  create_table "bbcs", force: :cascade do |t|
+    t.bigint "abcs_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abcs_id"], name: "index_bbcs_on_abcs_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "body"
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "followers", force: :cascade do |t|
+    t.bigint "follower_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -44,5 +74,7 @@ ActiveRecord::Schema.define(version: 2018_11_01_024259) do
   end
 
   add_foreign_key "articles", "users"
+  add_foreign_key "bbcs", "abcs", column: "abcs_id"
   add_foreign_key "comments", "articles"
+  add_foreign_key "followers", "users"
 end

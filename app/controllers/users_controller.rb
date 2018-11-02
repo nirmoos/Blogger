@@ -9,5 +9,22 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @articles = @user.articles.all
+    p current_user.followers
   end
+
+  def follow_option
+    @reffered_user = User.find(params[:user_id].to_i)
+    if params[:option] == 'follow'
+      current_user.following << @reffered_user
+    else
+      current_user.following.delete(@reffered_user)
+    end
+    head :ok
+  end
+
+  def is_following?
+    current_user.following.include?(@reffered_user)
+  end
+
+  helper_method :is_following?
 end

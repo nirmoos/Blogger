@@ -3,11 +3,19 @@
 <main class='show-user'>
   <header>
     <div>
-      <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
-      <div><div class='show-user-email'><%= @user.email %></div></div>
+      <div>
+        <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
+        <div><div class='show-user-email'><%= @user.email %></div></div>
+      </div>
+      <div class='show-user-options'>
+        <div class='show-user-follow' onclick='followOrUnfollow()' data-id=<%= @user.id %>>
+          <% if current_user.following.include?(@user) %>Unfollow<% else %>Follow<% end %>
+        </div>
+      </div>
     </div>
-    <div class='show-user-options'>
-      <div class='show-user-follow'>Follow</div>
+    <div class='show-user-follower-followyee'>
+      <div>Followers<div><%= @user.followers.count %></div></div>
+      <div>Following<div><%= @user.following.count %></div></div>
     </div>
   </header>
 

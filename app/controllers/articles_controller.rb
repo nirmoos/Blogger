@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.all
+    @articles = Article.where({ispublic: true})
   end
 
   def show
@@ -40,6 +40,14 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
+  def allfeed
+    @articles = Article.where({ispublic: true})
+    render 'index'
+  end
+
+  def personelfeed
+    render 'index'
+  end
   private
     def article_params
       params.require(:article).permit(:title, :content, :ispublic)

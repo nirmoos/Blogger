@@ -13,11 +13,11 @@
         <div class='show-user-follow' onclick='followOrUnfollow()' data-id=<%= @user.id %>>
           <%= current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %>
         </div>
-        <div class='show-user-block' onclick='blockOrUnblock()' data-id=<%= @user.id %>>
-          <% if current_user.admin? %>
+        <% if current_user.admin? %>
+          <div class='show-user-block' onclick='blockOrUnblock()' data-id=<%= @user.id %>>
             <%= @user.is_blocked?  ? 'Unblock' : 'Block' %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class='show-user-follower-followyee'>

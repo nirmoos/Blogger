@@ -9,7 +9,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @articles = @user.articles.all
-    p current_user.followers
   end
 
   def follow_option
@@ -22,9 +21,14 @@ class UsersController < ApplicationController
     head :ok
   end
 
-  def is_following?
-    current_user.following.include?(@reffered_user)
+  def block_option
+    @reffered_user = User.find(params[:user_id].to_i)
+    if params[:option] == 'block'
+      @reffered_user.update_attributes(is_blocked: true)
+    else
+      @reffered_user.update_attributes(is_blocked: false)
+    end
+    head :ok
   end
 
-  helper_method :is_following?
 end

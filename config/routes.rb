@@ -7,12 +7,14 @@ Rails.application.routes.draw do
   end
   get 'allfeed', to: 'articles#allfeed'
   get 'personelfeed', to: 'articles#personelfeed'
+  get 'myfeed', to: 'articles#myfeed'
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
 
   resources :users, only: [:show] do
     collection do
       post 'follow_option'
+      post 'block_option'
     end
   end
   post '/search_user', to: 'users#search_user'

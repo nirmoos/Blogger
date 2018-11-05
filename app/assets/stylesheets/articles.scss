@@ -110,3 +110,13 @@ hr {
 .search-results {
   display: none;
 }
+.feed-options {
+  display: flex;
+  justify-content: space-around;
+}
+.feed-options > div {
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 0 10px;
+  background-color: #f2f2f2;
+}

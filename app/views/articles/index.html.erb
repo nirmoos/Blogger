@@ -8,9 +8,17 @@
 
   <%= render 'article_creation' %>
   <hr>
-  <a href='/allfeed'>All Feed</a>
-  <a href='/personelfeed'>Personel Feed</a>
-  <a href='/myfeed'>My Feed</a>
+  <div class='feed-options'>
+    <div>
+      <%= link_to 'All Feed', allfeed_path %>
+    </div>
+    <div>
+      <%= link_to 'Personel Feed', personelfeed_path %>
+    </div>
+    <div>
+      <%= link_to 'My Feed', myfeed_path %>
+    </div>
+  </div>
   <%= render 'list_articles' %>
 
 </main>

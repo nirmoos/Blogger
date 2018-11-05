@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+
   def index
     @articles = Article.where({ispublic: true})
   end
@@ -46,6 +47,7 @@ class ArticlesController < ApplicationController
   end
 
   def personelfeed
+    @articles = Article.joins(:user).where(user_id: current_user.following.map(&:id))
     render 'index'
   end
   private

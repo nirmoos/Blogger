@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_111121) do
+ActiveRecord::Schema.define(version: 2018_11_06_151158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2018_11_06_111121) do
     t.text "body"
     t.bigint "user_id"
     t.bigint "comments_id"
+    t.boolean "is_deleted", default: false
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 

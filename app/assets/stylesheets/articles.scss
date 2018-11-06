@@ -35,6 +35,7 @@ hr {
   background-color: #d9d9d9;
   border: 1px solid black;
   padding: 3px 8px;
+  position: relative;
 }
 .article-list-header {
   background-color: #f2f2f2;
@@ -115,6 +116,15 @@ hr {
   justify-content: space-around;
 }
 .feed-options > div {
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 0 10px;
+  background-color: #f2f2f2;
+}
+.likes {
+  position: absolute;
+  top: 2px;
+  right: 8px;
   border-radius: 3px;
   border: 1px solid black;
   padding: 0 10px;

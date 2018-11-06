@@ -31,7 +31,7 @@ class ArticlesController < ApplicationController
     @articles = current_user.articles
     render 'index'
   end
-  
+
   private
     def article_params
       params.require(:article).permit(:title, :content, :ispublic)

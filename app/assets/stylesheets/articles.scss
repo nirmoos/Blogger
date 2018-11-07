@@ -130,3 +130,17 @@ hr {
   padding: 0 10px;
   background-color: #f2f2f2;
 }
+.comment-wrapper {
+  background-color: #fff;
+  border: 1px solid black;
+  border-right: none;
+  border-bottom: none;
+  margin: 3px 0 0 15px;
+  padding: 3px 0 0 5px;
+}
+.comment-header {
+  font-size: 12px;
+  border: 1px solid black;
+  display: inline-block;
+  padding: 0 10px 0 5px;
+}

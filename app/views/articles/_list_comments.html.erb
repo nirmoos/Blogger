@@ -7,7 +7,14 @@
       </div>
       <div><span>created at: </span><%= comment.created_at %></div>
     </div>
+    <hr>
     <div class="comment-body"><%= comment.body %></div>
-    <%= render partial: 'list_comments', locals: { comments: comment.replies } %>
+    <hr>
+    <div class="comment-footer">
+      <div class="like-box"><span>Like</span></div>
+      <div class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>"><span>Comment</span></div>
+    </div>
+    <hr>
+    <%= render partial: 'articles/list_comments', locals: { comments: comment.replies } %>
   </div>
 <% end %>

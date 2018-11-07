@@ -121,26 +121,53 @@ hr {
   padding: 0 10px;
   background-color: #f2f2f2;
 }
-.likes {
-  position: absolute;
-  top: 2px;
-  right: 8px;
-  border-radius: 3px;
+.comment-list > div {
   border: 1px solid black;
-  padding: 0 10px;
-  background-color: #f2f2f2;
 }
 .comment-wrapper {
   background-color: #fff;
-  border: 1px solid black;
-  border-right: none;
-  border-bottom: none;
   margin: 3px 0 0 15px;
+  border-left: 1px solid black;
   padding: 3px 0 0 5px;
+}
+.comment-wrapper > hr:last-child {
+  background-color: #fff;
 }
 .comment-header {
   font-size: 12px;
-  border: 1px solid black;
   display: inline-block;
   padding: 0 10px 0 5px;
+}
+.comment-body {
+  padding-left: 5px;
+}
+.comment-box, .like-box, .article-like, .article-comment {
+  background-color: #f2f2f2;
+  border: 1px solid black;
+  cursor: pointer;
+  text-align: center;
+  width: 45%;
+}
+.comment-box:hover, .like-box {
+  background-color: #fff;
+}
+.article-list > hr {
+  background-color: #000;
+}
+.article-list-creator {
+  display: flex;
+  align-items: flex-start;
+}
+.article-list-creator > div {
+  padding: 0 10px;
+  font-size: 12px;
+  border: 1px solid black;
+  margin: 0 10px 5px 0;
+}
+.comment-footer, .article-list-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.comment-wrapper hr {
+  background-color: #000;
 }

@@ -24,3 +24,17 @@ $(function () {
     // $('.search-results').hide();
   });
 });
+function onCommentClick ( event ) {
+  let div = $('<div />').append(
+    $('<form />', { action: 'create_comment', method: 'POST' }).append(
+      $('<input />', { name: 'comment[belong]', type: 'text', value: event.target.dataset.belong }),
+      $('<input />', { name: 'comment[id]', type: 'text', value: event.target.dataset.id }),
+      $('<input />', { name: 'comment[body]', placeholder: 'write your comment here...', type: 'text' }),
+      $('<input />', { type: 'submit', value: 'Save' })
+    )
+  )
+  if (event.target.dataset.belong === 'article')
+    $(".article-list-footer").after(div);
+  else
+    $(".comment-footer").after(div);
+}

@@ -2,11 +2,25 @@
   <hr>
   <section class='article-list'>
     <div class='article-list-header'><%= article.title %></div>
-    <div class='article-list-body'><%= article.content %></div>
-    <div class='likes'>Like</div>
-    <div class='comment-list'>
-      <%= render partial: 'list_comments', locals: { comments: article.comments } %>
+    <% user = article.user %>
+    <div class="article-list-creator">
+      <div>
+        <%= user.firstname + ' ' + user.lastname %>
+      </div>
+      <div>
+        <span>Created at: </span><%= article.created_at %>
+      </div>
     </div>
+    <div class='article-list-body'><%= article.content %></div>
+    <hr>
+    <div class='article-list-footer'>
+      <div class="article-like">Like</div>
+      <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= article.id %>">Comment</div>
+    </div>
+    <div class='comment-list'>
+      <%= render partial: 'articles/list_comments', locals: { comments: article.comments } %>
+    </div>
+
     <!-- <%= link_to 'Edit', edit_article_path(article) %> -->
     <!-- <%= link_to 'Destroy', article_path(article),
             method: :delete,

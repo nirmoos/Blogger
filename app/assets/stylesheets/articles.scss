@@ -27,6 +27,15 @@
     }
   }
 }
+.comment-new {
+  width: 100%;
+  padding: 5px;
+  margin: 8px 0 5px;
+}
+.comment-submit {
+  padding: 0 20px;
+  margin-left: 85%;
+}
 hr {
   margin: 5px auto;
   background-color: #fff;
@@ -128,10 +137,10 @@ hr {
   background-color: #fff;
   margin: 3px 0 0 15px;
   border-left: 1px solid black;
-  padding: 3px 0 0 5px;
+  padding: 3px 5px 0 5px;
 }
 .comment-wrapper > hr:last-child {
-  background-color: #fff;
+  background-color: #00995c;
 }
 .comment-header {
   font-size: 12px;
@@ -142,12 +151,15 @@ hr {
   padding-left: 5px;
 }
 .comment-box, .like-box, .article-like, .article-comment {
-  background-color: #f2f2f2;
   border: 1px solid black;
   cursor: pointer;
   text-align: center;
   width: 45%;
 }
+.article-like, .article-comment {
+  background-color: #f2f2f2;
+}
+
 .comment-box:hover, .like-box {
   background-color: #fff;
 }

@@ -11,8 +11,8 @@
     <div class="comment-body"><%= comment.body %></div>
     <hr>
     <div class="comment-footer">
-      <div class="like-box"><span>Like</span></div>
-      <div class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>"><span>Comment</span></div>
+      <div class="like-box">Like</div>
+      <div class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</div>
     </div>
     <hr>
     <%= render partial: 'articles/list_comments', locals: { comments: comment.replies } %>

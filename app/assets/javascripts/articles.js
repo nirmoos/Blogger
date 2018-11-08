@@ -24,17 +24,23 @@ $(function () {
     // $('.search-results').hide();
   });
 });
+const style = 'display: none;'
 function onCommentClick ( event ) {
-  let div = $('<div />').append(
+  if ($('.comment-form-wrapper').length === 1) {
+    $('.comment-form-wrapper').remove();
+    return
+  }
+  let div = $('<div />', { class: 'comment-form-wrapper'}).append(
     $('<form />', { action: 'create_comment', method: 'POST' }).append(
-      $('<input />', { name: 'comment[belong]', type: 'text', value: event.target.dataset.belong }),
-      $('<input />', { name: 'comment[id]', type: 'text', value: event.target.dataset.id }),
-      $('<input />', { name: 'comment[body]', placeholder: 'write your comment here...', type: 'text' }),
-      $('<input />', { type: 'submit', value: 'Save' })
+      $('<input />', { name: 'comment[belong]', style: style, type: 'text', value: event.target.dataset.belong }),
+      $('<input />', { name: 'comment[id]', style: style, type: 'text', value: event.target.dataset.id }),
+      $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
+      $('<div />', { class: 'cancel-save-wrapper' }).append(
+        $('<button />', { value: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
+        $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
+      ),
     )
   )
-  if (event.target.dataset.belong === 'article')
-    $(".article-list-footer").after(div);
-  else
-    $(".comment-footer").after(div);
+  console.log($(event.target).parent());
+  $(event.target).parent().after(div);
 }

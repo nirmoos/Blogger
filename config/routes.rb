@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'allfeed', to: 'articles#allfeed'
   get 'personelfeed', to: 'articles#personelfeed'
   get 'myfeed', to: 'articles#myfeed'
+  post 'create_comment', to: 'comments#create'
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
 

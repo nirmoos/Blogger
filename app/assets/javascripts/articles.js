@@ -19,6 +19,21 @@ function onSearchButtonClick () {
     }
   });
 }
+function onLikeButtonClick (event, source) {
+  let text = event.target.textContent.trim().toLowerCase();
+  $.ajax({
+    method: "POST",
+    url: "users/likes",
+    data: {
+      source: source,
+      id: event.target.dataset.id,
+      option: text,
+    },
+    success: function () {
+      $(event.target).text(text === 'Like' ? 'Unlike' : 'Like');
+    },
+  })
+}
 $(function () {
   $('.search-container input').on('focusout', function() {
     // $('.search-results').hide();

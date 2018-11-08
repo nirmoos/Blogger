@@ -11,7 +11,14 @@
     <div class="comment-body"><%= comment.body %></div>
     <hr>
     <div class="comment-footer">
-      <div class="like-box">Like</div>
+      <div class="like-box" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">
+        <% like = Like.find_by(
+          user_id: current_user.id,
+          likable_type: 'Comment',
+          likable_id: comment.id,
+        ) %>
+        <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
+      </div>
       <div class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</div>
     </div>
     <hr>

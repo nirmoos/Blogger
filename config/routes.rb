@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     collection do
       post 'follow_option'
       post 'block_option'
+      post 'likes'
     end
   end
   post '/search_user', to: 'users#search_user'

@@ -14,7 +14,14 @@
     <div class='article-list-body'><%= article.content %></div>
     <hr>
     <div class='article-list-footer'>
-      <div class="article-like">Like</div>
+      <div class="article-like" data-id="<%= article.id %>" onclick="onLikeButtonClick(event, 'article')">
+        <% like = Like.find_by(
+          user_id: current_user.id,
+          likable_type: 'Article',
+          likable_id: article.id,
+        ) %>
+        <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
+      </div>
       <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= article.id %>">Comment</div>
     </div>
     <div class='comment-list'>

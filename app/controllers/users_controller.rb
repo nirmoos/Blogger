@@ -31,4 +31,24 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def likes
+    if params[:option] == 'like'
+      if params[:source] == 'article'
+        article = Article.find(params[:id]);
+        article.likes.create(user_id: current_user.id);
+      else
+        comment = Comment.find(params[:id]);
+        comment.likes.create(user_id: params[:id]);
+      end
+    else
+      like = Like.find_by(
+        user_id: current_user.id,
+        likable_type: params[:source] == 'article' ? 'Article' : 'Comment',
+        likable_id: params[:id],
+      );
+      Like.destroy(like.id);
+    end
+    head :ok
+  end
+
 end

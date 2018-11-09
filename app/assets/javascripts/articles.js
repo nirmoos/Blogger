@@ -30,7 +30,7 @@ function onLikeButtonClick (event, source) {
       option: text,
     },
     success: function () {
-      $(event.target).text(text === 'Like' ? 'Unlike' : 'Like');
+      $(event.target).text(text === 'like' ? 'Unlike' : 'Like');
     },
   })
 }

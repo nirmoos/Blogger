@@ -38,7 +38,7 @@ class UsersController < ApplicationController
         article.likes.create(user_id: current_user.id);
       else
         comment = Comment.find(params[:id]);
-        comment.likes.create(user_id: params[:id]);
+        comment.likes.create(user_id: current_user.id);
       end
     else
       like = Like.find_by(

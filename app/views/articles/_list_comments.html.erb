@@ -1,27 +1,25 @@
 <% comments.each do | comment | %>
-  <div class="comment-wrapper">
+  <div class="comment-wrapper<%= index > 0 && " comment-wrapper-padding" %>">
     <div class="comment-header">
       <% user = User.find(comment.user_id) %>
-      <div>
-        <%= user.firstname + ' ' + user.lastname %>
-      </div>
-      <div><span>created at: </span><%= comment.created_at %></div>
+      <span class="commenter-name">
+        <%= link_to user.firstname + ' ' + user.lastname, user_path(user) %>
+      </span>
+      <span class="comment-body"><%= comment.body %></span>
     </div>
-    <hr>
-    <div class="comment-body"><%= comment.body %></div>
-    <hr>
     <div class="comment-footer">
-      <div class="like-box" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">
+      <span class="like-box" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">
         <% like = Like.find_by(
           user_id: current_user.id,
           likable_type: 'Comment',
           likable_id: comment.id,
         ) %>
         <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
-      </div>
-      <div class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</div>
+      </span><span>.</span>
+      <span class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</span>
+      <span>.<span>
+      <span><%= comment.created_at %></span>
     </div>
-    <hr>
-    <%= render partial: 'articles/list_comments', locals: { comments: comment.replies } %>
+    <%= render partial: 'articles/list_comments', locals: { comments: comment.replies, index: index + 1 } %>
   </div>
 <% end %>

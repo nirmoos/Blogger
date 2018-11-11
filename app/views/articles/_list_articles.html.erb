@@ -1,16 +1,15 @@
 <% @articles.each do |article| %>
-  <hr>
   <section class='article-list'>
-    <div class='article-list-header'><%= article.title %></div>
     <% user = article.user %>
     <div class="article-list-creator">
-      <div>
-        <%= user.firstname + ' ' + user.lastname %>
+      <div class="article-owner">
+        <%= link_to user.firstname + " " + user.lastname, user_path(user) %>
       </div>
-      <div>
-        <span>Created at: </span><%= article.created_at %>
+      <div class="creation-time">
+        <%= article.created_at %>
       </div>
     </div>
+    <div class='article-list-header'><%= article.title %></div>
     <div class='article-list-body'><%= article.content %></div>
     <hr>
     <div class='article-list-footer'>
@@ -20,12 +19,17 @@
           likable_type: 'Article',
           likable_id: article.id,
         ) %>
+        <% if current_user.likes.include?(like) %>
+          <i class="far fa-thumbs-down"></i>
+        <% else %>
+          <i class="far fa-thumbs-up"></i>
+        <% end %>
         <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
       </div>
-      <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= article.id %>">Comment</div>
+      <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= article.id %>"><i class="far fa-comment"></i>Comment</div>
     </div>
     <div class='comment-list'>
-      <%= render partial: 'articles/list_comments', locals: { comments: article.comments } %>
+      <%= render partial: 'articles/list_comments', locals: { comments: article.comments, index: 0 } %>
     </div>
 
     <!-- <%= link_to 'Edit', edit_article_path(article) %> -->

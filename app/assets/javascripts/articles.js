@@ -31,6 +31,10 @@ function onLikeButtonClick (event, source) {
     },
     success: function () {
       $(event.target).text(text === 'like' ? 'Unlike' : 'Like');
+      if (text === 'like' && source === 'article')
+        $(event.target).prepend("<i class='far fa-thumbs-down'></i>");
+      else if(text === 'unlike' && source === 'article')
+        $(event.target).prepend("<i class='far fa-thumbs-up'></i>");
     },
   })
 }

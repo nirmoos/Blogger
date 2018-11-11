@@ -6,8 +6,9 @@
   width: 500px;
   margin: 20px auto;
   padding: 5px 10px;
-  // border-radius: 5px;
   .article-creation {
+    background-color: #fff;
+    padding: 8px 8px;
     div {
       display: flex;
       justify-content: flex-end;
@@ -17,15 +18,20 @@
       display: block;
       padding: 5px;
       margin: 5px auto;
-      border: 1px solid black;
+      border: 1px solid #365899;
     }
     input[type="submit"] {
       width: 120px;
       display: block;
       padding: 1px;
       margin: 0 0 0 8px;
+      border: 1px solid #365899;
     }
   }
+}
+#article_ispublic {
+  padding: 0px 6px;
+  border: 1px solid #365899;
 }
 .creation-time {
   font-size: 12px;
@@ -78,7 +84,7 @@ hr {
 .account-wrapper {
   position: absolute;
   right: 10px;
-  top: 20px;
+  top: 100px;
 }
 .account-wrapper {
   cursor: pointer;
@@ -104,15 +110,10 @@ hr {
   margin-bottom: 5px;
 }
 .search-container {
-  border: 1px solid black;
-  display: inline-block;
-  top: 20px;
-  left: 20px;
-  position: absolute;
 }
 .search-icon {
   display: inline-block;
-  padding: 6px 10px;
+  padding: 3px 8px;
   background: #ddd;
   font-size: 17px;
   border: none;
@@ -121,18 +122,31 @@ hr {
   padding: 3px;
   font-size: 17px;
   border: none;
+  width: 400px;
 }
 .search-results div {
-  background-color: #b3b3b3;
-  padding: 3px 5px;
-  cursor: pointer;
+  padding: 5px 5px;
 }
 .search-results hr {
   width: 95%;
   margin: 0;
 }
+.navbar-ul-li a {
+  color: #fff;
+}
+.navbar-ul-li {
+  margin-left: 20%;
+}
 .search-results {
+  background-color: #fff;
+  cursor: pointer;
+  padding-left: 8px;
+  font-size: 14px;
+  color: #1d2129;
+  width: 400px;
   display: none;
+  position: absolute;
+  top: 44px;
 }
 .feed-options {
   display: flex;
@@ -170,7 +184,7 @@ hr {
   color: #1d2129;
 }
 .comment-wrapper-padding {
-  margin-left: 12px;
+  margin-left: 15px;
 }
 .comment-box:hover, .like-box:hover {
   text-decoration: underline;
@@ -202,7 +216,7 @@ hr {
 
 }
 .article-list > hr {
-  background-color: rgba(0, 0, 0, 0.1);;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .article-list-footer {
   display: flex;

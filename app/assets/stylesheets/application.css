@@ -14,5 +14,10 @@
  *= require_self
  */
 body {
-  background-color: rgb(233, 235, 238);;
+  background-color: rgb(233, 235, 238);
+}
+.custom-navbar {
+  background-color: #4267b2 !important;
+  border-bottom: 1px solid #29487d;
+  color: #fff !important;
 }

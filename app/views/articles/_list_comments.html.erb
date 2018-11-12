@@ -2,10 +2,20 @@
   <div class="comment-wrapper<%= index > 0 && " comment-wrapper-padding" %>">
     <div class="comment-header">
       <% user = User.find(comment.user_id) %>
-      <span class="commenter-name">
-        <%= link_to user.firstname + ' ' + user.lastname, user_path(user) %>
-      </span>
-      <span class="comment-body"><%= comment.body %></span>
+      <div class="image-comment-wrapper">
+        <%= link_to user_path(user) do %>
+          <div class="comment-image">
+            <%= user_avatar(user.id) %>
+          </div>
+        <% end %>
+        <div class="comment-only-wrapper">
+          <span class="commenter-name">
+            <%= link_to user.firstname + ' ' + user.lastname, user_path(user) %>
+          </span>
+          <span class="comment-body"><%= comment.body %></span>
+        </div>
+      </div>
+      <div></div>
     </div>
     <div class="comment-footer">
       <span class="like-box" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">

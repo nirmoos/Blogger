@@ -1,9 +1,4 @@
-function toggleAccountmenu () {
-  if (($('.logout-link').css('display')) == 'none')
-   $(".logout-link").show();
-  else
-   $(".logout-link").hide();
-}
+
 function onSearchButtonClick () {
   let text = $('.search-container input').val();
   $.ajax({
@@ -38,12 +33,7 @@ function onLikeButtonClick (event, source) {
     },
   })
 }
-$(function () {
-  $('.search-container input').on('focusout', function() {
-    // $('.search-results').hide();
-  });
-});
-const style = 'display: none;'
+
 function onCommentClick ( event ) {
   if ($('.comment-form-wrapper').length === 1) {
     $('.comment-form-wrapper').remove();
@@ -51,8 +41,8 @@ function onCommentClick ( event ) {
   }
   let div = $('<div />', { class: 'comment-form-wrapper'}).append(
     $('<form />', { action: 'create_comment', method: 'POST' }).append(
-      $('<input />', { name: 'comment[belong]', style: style, type: 'text', value: event.target.dataset.belong }),
-      $('<input />', { name: 'comment[id]', style: style, type: 'text', value: event.target.dataset.id }),
+      $('<input />', { name: 'comment[belong]', style: 'display: none;', type: 'text', value: event.target.dataset.belong }),
+      $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
       $('<div />', { class: 'cancel-save-wrapper' }).append(
         $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),

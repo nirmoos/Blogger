@@ -1,8 +1,0 @@
-<div class='account-wrapper'>
-  <div class='account-icon' onclick='toggleAccountmenu()'><%= icon('fas', 'user') %></div>
-  <div class='logout-link'>
-     <div><%= link_to('Logout', destroy_user_session_path, method: :delete) %></div>
-     <hr>
-     <div><%= link_to('Delete Account', user_registration_path, method: :delete, data: { confirm: 'Are you sure?' }) %></div>
-  </div>
-</div>

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
-  <a class="navbar-brand" href="<%= root_path %>">Blogger</a>
+  <a class="navbar-brand website-name" href="<%= root_path %>">Blogger</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,24 +13,40 @@
 
     <ul class="navbar-nav mr-auto navbar-ul-li">
       <li class="nav-item active">
-        <a class="nav-link" href="<%= root_path %>">Home</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#"><%= current_user.firstname + ' ' + current_user.lastname %></a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+        <div>
+          <a class="nav-link" href="<%= root_path %>">Home</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+      <li class="nav-item active">
+        <div>
+          <a class="nav-link" href="<%= user_path(current_user) %>">
+            <%= user_avatar(current_user.id) %>
+            <%= current_user.firstname %>
+          </a>
+        </div>
+      </li>
+      <li class="nav-item dropdown active">
+        <div>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-rss-square"></i>
+          </a>
+        </div>
+        <div class="dropdown-menu feed-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="<%= allfeed_path %>">All Feed</a>
+          <a class="dropdown-item" href="<%= personelfeed_path %>">Personel Feed</a>
+          <a class="dropdown-item" href="<%= myfeed_path %>">My Feed</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown active">
+        <div>
+          <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </a>
+        </div>
+        <div class="dropdown-menu feed-menu" aria-labelledby="accountDropdown">
+          <%= link_to('Delete Account', user_registration_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item') %>
+          <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item') %>
+        </div>
       </li>
     </ul>
   </div>

@@ -1,21 +1,8 @@
 <% provide(:title, 'home') %>
 
-<%= render 'menu_button' %>
-
 <main class='article-main'>
 
   <%= render 'article_creation' %>
   <hr>
-  <div class='feed-options'>
-    <div>
-      <%= link_to 'All Feed', allfeed_path %>
-    </div>
-    <div>
-      <%= link_to 'Personel Feed', personelfeed_path %>
-    </div>
-    <div>
-      <%= link_to 'My Feed', myfeed_path %>
-    </div>
-  </div>
   <%= render 'list_articles' %>
 </main>

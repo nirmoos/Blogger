@@ -2,11 +2,18 @@
   <section class='article-list'>
     <% user = article.user %>
     <div class="article-list-creator">
-      <div class="article-owner">
-        <%= link_to user.firstname + " " + user.lastname, user_path(user) %>
-      </div>
-      <div class="creation-time">
-        <%= article.created_at %>
+      <div class="image-creator-wrapper">
+        <div class="image-wrapper">
+          <%= user_avatar(user.id) %>
+        </div>
+        <div class="owner-wrapper">
+          <div class="article-owner">
+            <%= link_to user.firstname + " " + user.lastname, user_path(user) %>
+          </div>
+          <div class="creation-time">
+            <%= article.created_at %>
+          </div>
+        </div>
       </div>
     </div>
     <div class='article-list-header'><%= article.title %></div>
@@ -28,6 +35,7 @@
       </div>
       <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= article.id %>"><i class="far fa-comment"></i>Comment</div>
     </div>
+    <hr>
     <div class='comment-list'>
       <%= render partial: 'articles/list_comments', locals: { comments: article.comments, index: 0 } %>
     </div>

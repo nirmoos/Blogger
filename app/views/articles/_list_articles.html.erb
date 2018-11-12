@@ -19,6 +19,11 @@
     <div class='article-list-header'><%= article.title %></div>
     <div class='article-list-body'><%= article.content %></div>
     <hr>
+    <div class="likes-comments-counter">
+      <div><%= article.likes.count %> likes</div>
+      <div><%= get_total_comments_count(article) %> comments</div>
+    </div>
+    <hr>
     <div class='article-list-footer'>
       <div class="article-like" data-id="<%= article.id %>" onclick="onLikeButtonClick(event, 'article')">
         <% like = Like.find_by(

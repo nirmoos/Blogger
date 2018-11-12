@@ -22,6 +22,7 @@
     }
     input[type="submit"] {
       width: 120px;
+      cursor: pointer;
       display: block;
       padding: 1px;
       margin: 0 0 0 8px;
@@ -38,11 +39,22 @@
   border-right: 1px solid #294170;
   padding: 0 15px !important;
 }
+.likes-comments-counter {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgb(96, 103, 112);
+}
 .website-name {
   padding: 0px 10px 0 5px !important;
   background-color: #294170;
   color: #fff !important;
   border-radius: 5px;
+}
+.comment-form-wrapper input {
+  padding-left: 13px;
+  border-radius: 10px;
+  border: 1px solid #294170;
 }
 .navbar-ul-li li:last-child a {
   border-right: none;
@@ -79,9 +91,13 @@
   border-radius: 20px;
   margin-right: 5px;
 }
+#article_ispublic:hover {
+  background-color: #fff;
+}
 #article_ispublic {
   padding: 0px 6px;
   border: 1px solid #365899;
+  cursor: pointer;
 }
 .creation-time {
   font-size: 12px;
@@ -232,6 +248,22 @@ hr {
   background-color: rgb(239, 241, 243);
   border-radius: 20px;
   padding: 8px 10px;
+  margin-right: 30px;
+  position: relative;
+}
+.comment-likes-count i {
+  color: #337aff;
+}
+.comment-likes-count {
+  position: absolute;
+  right: -25px;
+  bottom: 0px;
+  color: #777d88;
+  font-size: 11px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid #337aff;
+  padding: 0 5px 0 3px;
 }
 .commenter-name {
   color: rgb(54, 88, 153);

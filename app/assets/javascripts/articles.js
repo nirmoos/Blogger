@@ -45,8 +45,8 @@ function onCommentClick ( event ) {
       $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
       $('<div />', { class: 'cancel-save-wrapper' }).append(
-        $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
-        $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
+        // $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
+        // $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
       ),
     )
   )

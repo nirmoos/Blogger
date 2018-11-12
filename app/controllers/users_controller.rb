@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:search_user]
+  skip_before_action :verify_authenticity_token, only: [:likes, :search_user]
   def search_user
     search_text = params[:search_text]
     @users = User.select('id', 'firstname', 'lastname').where('firstname LIKE ?', "%#{search_text}%").where.not(['firstname= ? and lastname= ?', current_user.firstname, current_user.lastname])

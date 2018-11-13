@@ -12,7 +12,9 @@
           <span class="commenter-name">
             <%= link_to user.firstname + ' ' + user.lastname, user_path(user) %>
           </span>
-          <span class="comment-body"><%= comment.body %></span>
+          <span class="comment-body">
+            <%= comment.is_deleted ? '[comment is deleted by admin]' : comment.body %>
+          </span>
           <div class="comment-likes-count"><i class="fas fa-thumbs-up"></i> <%= comment.likes.count %></div>
         </div>
       </div>
@@ -28,6 +30,16 @@
         <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
       </span><span>.</span>
       <span class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</span>
+      <% if current_user.admin? %>
+        <span>.<span>
+        <span class="delete-box">
+          <% if comment.is_deleted %>
+            <%= link_to 'Undo delete', comment_path(comment), method: :put %>
+          <% else %>
+            <%= link_to 'Delete', comment_path(comment), method: :delete %>
+          <% end %>
+        </span>
+      <% end %>
       <span>.<span>
       <span><%= comment.created_at %></span>
     </div>

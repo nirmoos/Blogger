@@ -46,10 +46,13 @@ function onCommentClick ( event ) {
       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
       $('<div />', { class: 'cancel-save-wrapper' }).append(
         // $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
-        // $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
+        $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
       ),
     )
   )
   console.log($(event.target).parent());
   $(event.target).parent().after(div);
+}
+function deleteSource (event) {
+
 }

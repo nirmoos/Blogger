@@ -128,7 +128,7 @@
 }
 hr {
   margin: 5px auto;
-  background-color: rgba(0, 0, 0, 0.1);;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .article-list {
   padding: 8px 8px 3px;
@@ -136,6 +136,21 @@ hr {
   background-color: #fff;
   margin-bottom: 8px;
   border-radius: 5px;
+  position: relative;
+}
+.delete-button-for-admin:hover {
+  background-color: #999999;
+  color: #e6e6e6;
+}
+.delete-button-for-admin {
+  position: absolute;
+  font-size: 13px;
+  top: 6px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border-radius: 20px;
 }
 .article-list-header {
   text-decoration: underline;
@@ -274,7 +289,16 @@ hr {
 .comment-body {
   color: #1d2129;
 }
+.comment-submit {
+  display: none;
+}
+.comment-header .delete-button-for-admin {
+  font-size: 10px;
+  padding: 3px 6px;
+  top: 0px;
+}
 .comment-header {
+  position: relative;
   display: flex;
   justify-content: space-between;
 }

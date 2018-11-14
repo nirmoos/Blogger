@@ -2,9 +2,14 @@
   <%= form_with scope: :article, url: articles_path, local: true do |form| %>
     <%= form.text_field :title, placeholder: 'title...' %>
     <%= form.text_area :content, placeholder: "what's on your mind..." %>
-    <div class='public-or-private'>
-      <%= form.select :ispublic, options_for_select([['Public', true], ['Private', false]]) %>
-      <%= form.submit %>
+    <div class='article-creation-footer'>
+      <div class="save-for-later">
+        <span onclick="makeItDraft()">Save for later</span>
+      </div>
+      <div class="public-or-private">
+        <%= form.select :ispublic, options_for_select([['Public', true], ['Private', false]]) %>
+        <%= form.submit %>
+      </div>
     </div>
   <% end %>
 </section>

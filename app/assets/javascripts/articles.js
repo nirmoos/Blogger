@@ -14,6 +14,25 @@ function onSearchButtonClick () {
     }
   });
 }
+function makeItDraft () {
+  $.ajax({
+    method: "POST",
+    url: "articles/draft",
+    data: {
+      "article": {
+        "title": $("#article_title").val(),
+        "content": $("#article_content").val(),
+        "ispublic": $("#article_ispublic").val(),
+        "is_drafted": true,
+      }
+    }
+  })
+  .done(function ( data ) {
+    $("#article_title").val("");
+    $("#article_content").val("");
+    $("#article_ispublic").val("Public");
+  });
+}
 function onLikeButtonClick (event, source) {
   let text = event.target.textContent.trim().toLowerCase();
   $.ajax({
@@ -46,13 +65,13 @@ function onCommentClick ( event ) {
       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
       $('<div />', { class: 'cancel-save-wrapper' }).append(
         // $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
-        $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
+        // $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
       ),
     )
   )
   console.log($(event.target).parent());
   $(event.target).parent().after(div);
 }
-function deleteSource (event) {
+function showDraftedArticles () {
 
 }

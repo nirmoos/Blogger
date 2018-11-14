@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   resources :articles do
     resources :comments, shallow: true
+    collection do
+      post 'draft'
+    end
   end
   get 'allfeed', to: 'articles#allfeed'
   get 'personelfeed', to: 'articles#personelfeed'

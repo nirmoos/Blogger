@@ -9,9 +9,13 @@
   .article-creation {
     background-color: #fff;
     padding: 8px 8px;
-    div {
+    .public-or-private {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-around;
+    }
+    .article-creation-footer {
+      display: flex;
+      justify-content: space-between;
     }
     input, textarea {
       width: 100%;
@@ -30,6 +34,14 @@
     }
   }
 }
+.save-for-later:hover {
+  background-color: #e6e6e6;
+}
+.save-for-later {
+  padding: 0px 10px;
+  border: 1px solid #365899;
+  cursor: pointer;
+}
 .navbar-ul-li li img {
   max-height: 25px;
   max-width: 25px;
@@ -37,7 +49,7 @@
 }
 .navbar-ul-li li a {
   border-right: 1px solid #294170;
-  padding: 0 15px !important;
+  padding: 0 0 !important;
 }
 .likes-comments-counter {
   display: flex;
@@ -62,15 +74,13 @@
 .navbar-ul-li li {
   padding: 0;
 }
-.navbar-ul-li li div a:hover {
+.navbar-ul-li li a div:hover {
   background-color: #294170;
   border-radius: 3px;
 }
-.navbar-ul-li li div a {
+.navbar-ul-li li a div {
   color: #fff !important;
-}
-.navbar-ul-li li div {
-  padding: 5px 0;
+  padding: 0 15px !important;
 }
 .article-list-creator {
   display: flex;
@@ -128,7 +138,7 @@
 }
 hr {
   margin: 5px auto;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);;
 }
 .article-list {
   padding: 8px 8px 3px;
@@ -136,21 +146,6 @@ hr {
   background-color: #fff;
   margin-bottom: 8px;
   border-radius: 5px;
-  position: relative;
-}
-.delete-button-for-admin:hover {
-  background-color: #999999;
-  color: #e6e6e6;
-}
-.delete-button-for-admin {
-  position: absolute;
-  font-size: 13px;
-  top: 6px;
-  right: 10px;
-  padding: 5px 10px;
-  background-color: rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  border-radius: 20px;
 }
 .article-list-header {
   text-decoration: underline;
@@ -289,16 +284,7 @@ hr {
 .comment-body {
   color: #1d2129;
 }
-.comment-submit {
-  display: none;
-}
-.comment-header .delete-button-for-admin {
-  font-size: 10px;
-  padding: 3px 6px;
-  top: 0px;
-}
 .comment-header {
-  position: relative;
   display: flex;
   justify-content: space-between;
 }
@@ -311,6 +297,14 @@ hr {
 }
 .comment-box:hover, .like-box:hover {
   text-decoration: underline;
+}
+.show-drafted:hover {
+  background-color: #294170;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.show-drafted {
+  padding: 0 15px;
 }
 .comment-box, .like-box {
   cursor: pointer;

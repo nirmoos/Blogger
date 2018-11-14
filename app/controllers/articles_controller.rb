@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:draft]
 
   def index
     @articles = Article.where({ispublic: true})
@@ -8,6 +9,12 @@ class ArticlesController < ApplicationController
     current_user.articles.create(article_params)
 
     redirect_to articles_path
+  end
+
+  def draft
+    current_user.articles.create(article_params)
+
+    head :ok
   end
 
   def destroy
@@ -34,6 +41,6 @@ class ArticlesController < ApplicationController
 
   private
     def article_params
-      params.require(:article).permit(:title, :content, :ispublic)
+      params.require(:article).permit(:title, :content, :ispublic, :is_drafted)
     end
 end

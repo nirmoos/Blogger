@@ -23,13 +23,14 @@ function makeItDraft () {
         "title": $("#article_title").val(),
         "content": $("#article_content").val(),
         "ispublic": $("#article_ispublic").val(),
+        "id": $("#article_id").length != 0 ? $("#article_id").val() : 'nil',
         "is_drafted": true,
       }
     }
   })
   .done(function ( data ) {
     $("#show-drafted-articles").append(
-      $('<a class="dropdown-item" href=/articles/"' + data.id + '">' + $("#article_title").val() + '</a>')
+      $('<a class="dropdown-item" href=/articles/${data.id}>' + $("#article_title").val() + '</a>')
     );
     $("#article_title").val("");
     $("#article_content").val("");
@@ -83,7 +84,7 @@ function showDraftedArticles (event) {
       $("#article_content").val(data.content);
       $("#article_ispublic").val(data.ispublic ? "Public" : "Private");
       $("#article_ispublic").after(
-        $('<input />', { name: 'article[id]', style: 'display: none;', type: 'text', value: data.id })
+        $('<input />', { name: 'article[id]', id: 'article_id', style: 'display: none;', type: 'text', value: data.id })
       );
     }
   );

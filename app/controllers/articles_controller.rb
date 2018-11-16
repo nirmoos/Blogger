@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:draft]
 
   def index
-    @articles = Article.where({ ispublic: true })
+    @articles = Article.where({ ispublic: true, is_drafted: false })
     @drafted_articles = Article.where({ user_id: current_user.id, is_drafted: true })
   end
 
@@ -23,12 +23,9 @@ class ArticlesController < ApplicationController
   end
 
   def draft
-    p '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    p params
-    p '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    if params[:article].has_key? 'id'
+    if params[:article][:id] != 'nil'
       article = Article.find_by(id: params[:article][:id])
-      article.update_attributes(is_drafted: false, title: params[:article][:title], content: params[:article][:content], ispublic: params[:article][:ispublic])
+      article.update_attributes(article_params)
     else
       article = current_user.articles.create(article_params)
     end
@@ -44,7 +41,7 @@ class ArticlesController < ApplicationController
   end
 
   def allfeed
-    @articles = Article.where({ispublic: true})
+    @articles = Article.where({ ispublic: true, is_drafted: false })
     render 'index'
   end
 

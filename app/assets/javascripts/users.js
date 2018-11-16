@@ -31,16 +31,3 @@ function blockOrUnblock () {
     },
   });
 }
-
-// function followUser(e) {
-//
-// }
-//
-// function unfollowUser(e) {
-//
-// }
-//
-// $(function() {
-//   $(".follow-user-btn").click(followUser);
-//   $(".unfollow-user-btn").click(unfollowUser);
-// })

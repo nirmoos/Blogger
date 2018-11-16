@@ -56,22 +56,12 @@
             <i class="fas fa-envelope-open"></i>
           </div>
         </a>
-        <div class="dropdown-menu feed-menu" aria-labelledby="showDraftedArticles">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-menu feed-menu" aria-labelledby="showDraftedArticles" id="show-drafted-articles">
+          <% @drafted_articles.each do | article | %>
+            <%= link_to article.title, article_path(article), class: "dropdown-item", onclick: "showDraftedArticles(event)" %>
+          <% end %>
         </div>
       </li>
     </ul>
-    <!-- <div class="dropdown">
-      <div class="dropdown-toggle" id="showDraftedArticles" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-envelope-open"></i>
-      </div>
-      <div class="dropdown-menu" aria-labelledby="showDraftedArticles">
-
-      </div>
-    </div> -->
-    <!-- <div class="show-drafted" onclick='showDraftedArticles()'>
-    </div> -->
   </div>
 </nav>

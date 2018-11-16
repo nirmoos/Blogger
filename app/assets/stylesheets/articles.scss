@@ -330,7 +330,16 @@ hr {
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-
+}
+.delete-button-for-admin:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.delete-button-for-admin {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 10px;
+  border-radius: 30px;
 }
 .article-list > hr {
   background-color: rgba(0, 0, 0, 0.1);

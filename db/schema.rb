@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_071516) do
+ActiveRecord::Schema.define(version: 2018_11_17_073708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,15 @@ ActiveRecord::Schema.define(version: 2018_11_14_071516) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.bigint "article_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id", "name"], name: "index_tags_on_article_id_and_name", unique: true
+    t.index ["article_id"], name: "index_tags_on_article_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -113,4 +122,5 @@ ActiveRecord::Schema.define(version: 2018_11_14_071516) do
   add_foreign_key "bbcs", "abcs", column: "abcs_id"
   add_foreign_key "comments", "articles"
   add_foreign_key "followers", "users"
+  add_foreign_key "tags", "articles"
 end

@@ -1,0 +1,22 @@
+<div class="user-profile">
+  <div class="user-cover-image"><%= user_cover(current_user.id) %></div>
+  <div class="user-avatar-in-profile"><%= user_avatar(current_user.id) %></div>
+  <div class="user-profile-name">
+    <div class="profile-name"><%= current_user.firstname + ' ' + current_user.lastname %></div>
+    <div class="profile-email"><%= current_user.email %></div>
+  </div>
+  <div class="user-profile-footer">
+    <div class="article-count">
+      <div>Articles</div>
+      <div><%= current_user.articles.count %></div>
+    </div>
+    <div class="following-count">
+      <div>Following</div>
+      <div><%= current_user.following.count %></div>
+    </div>
+    <div class="followers-count">
+      <div>Followers</div>
+      <div><%= current_user.followers.count %></div>
+    </div>
+  </div>
+</div>

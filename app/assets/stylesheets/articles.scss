@@ -95,6 +95,32 @@
   border-radius: 20px;
   max-width: 40px;
 }
+.user-avatar-in-profile {
+  position: relative;
+}
+.user-avatar-in-profile img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50px;
+  position: absolute;
+  top: -50px;
+  left: 5px;
+}
+.user-profile-name {
+  text-align: center;
+}
+.profile-name {
+  color: rgb(20, 23, 26);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+.profile-email {
+  color: rgb(101, 119, 134);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
 .image-wrapper, .comment-image {
   max-height: 40px;
   max-width: 40px;
@@ -230,6 +256,12 @@ hr {
   position: absolute;
   top: 39px;
 }
+.article-tag-list li {
+  display: inline;
+}
+.article-tag-list {
+  list-style-type: none;
+}
 .feed-options {
   display: flex;
   justify-content: space-around;
@@ -341,9 +373,6 @@ hr {
   padding: 5px 10px;
   border-radius: 30px;
 }
-.tab-submit {
-  display: none !important;
-}
 .article-list > hr {
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -354,33 +383,28 @@ hr {
 .dropdown-toggle::after {
     display:none;
 }
-.article-tags ul {
-  border: 1px solid #365899;
-  list-style-type: none;
-  padding: 5px;
+.user-profile-footer > div > div:last-child {
+  color: rgb(135, 127, 99);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
 }
-.article-tags ul li {
-  display: inline;
+.user-profile-footer > div > div:first-child {
+  color: rgb(101, 119, 134);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
 }
-.tag-input-box:focus {
-  outline: none;
+.user-profile-footer {
+  padding: 10px 50px;
 }
-.tag-input-box {
-  width: 150px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: inline !important;
-  border: none !important;
+.user-profile {
+  position: absolute;
+  background-color: #fff;
+  top: 67px;
+  left: 20px;
 }
-.listed-tag-name {
-  background-color: #577bc1;
-  padding: 2px 5px;
-  border: 1px solid black;
-  margin-right: 5px;
-  border-radius: 3px;
-  color: #fff;
-  cursor: pointer;
-}
-.listed-tag-name-deletor {
-  margin-left: 5px;
+.user-profile-footer {
+  display: flex;
+  justify-content: space-between;
 }

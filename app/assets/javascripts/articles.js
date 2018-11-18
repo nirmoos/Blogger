@@ -89,3 +89,22 @@ function showDraftedArticles (event) {
     }
   );
 }
+function onTagSubmit(event) {
+  event.preventDefault();
+  if (event.keyCode == 13) {
+    $("#article-tag-list").prepend(
+      $('<li />', { class: "listed-tag-name", text: event.target.value, onclick: "deleteTagName(event)" }).append(
+        $("<span />", { class: "listed-tag-name-deletor" }).append(
+          $("<i />", { class: "fas fa-times"}),
+        ),
+      ),
+    );
+    $(event.target).val("");
+  }
+}
+function onArticleSubmit(event) {
+  event.preventDefault();
+}
+function deleteTagName(event) {
+  $(event.target).remove();
+}

@@ -341,6 +341,9 @@ hr {
   padding: 5px 10px;
   border-radius: 30px;
 }
+.tab-submit {
+  display: none !important;
+}
 .article-list > hr {
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -350,4 +353,34 @@ hr {
 }
 .dropdown-toggle::after {
     display:none;
+}
+.article-tags ul {
+  border: 1px solid #365899;
+  list-style-type: none;
+  padding: 5px;
+}
+.article-tags ul li {
+  display: inline;
+}
+.tag-input-box:focus {
+  outline: none;
+}
+.tag-input-box {
+  width: 150px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline !important;
+  border: none !important;
+}
+.listed-tag-name {
+  background-color: #577bc1;
+  padding: 2px 5px;
+  border: 1px solid black;
+  margin-right: 5px;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+.listed-tag-name-deletor {
+  margin-left: 5px;
 }

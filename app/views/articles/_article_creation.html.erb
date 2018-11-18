@@ -1,7 +1,14 @@
 <section class='article-creation'>
-  <%= form_with scope: :article, url: articles_path, local: true do |form| %>
+  <%= form_with scope: :article, url: articles_path, local: true, html: { onsubmit: "onArticleSubmit(event)" } do |form| %>
     <%= form.text_field :title, placeholder: 'title...' %>
     <%= form.text_area :content, placeholder: "what's on your mind..." %>
+    <div class="article-tags">
+      <ul id="article-tag-list">
+        <li>
+          <input type="text" id="tag-name" onkeyup="onTagSubmit(event)" class="tag-input-box" placeholder="enter tag name..." name="tagName" />
+        </li>
+      </ul>
+    </div>
     <div class='article-creation-footer'>
       <div class="save-for-later">
         <span onclick="makeItDraft()">Save for later</span>

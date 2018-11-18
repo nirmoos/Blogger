@@ -256,11 +256,41 @@ hr {
   position: absolute;
   top: 39px;
 }
-.article-tag-list li {
+#article-tag-list li {
   display: inline;
 }
-.article-tag-list {
+#article-tag-list {
   list-style-type: none;
+}
+.tab-submit {
+  display: none !important;
+}
+.tag-input-box:focus {
+  outline: none;
+}
+.tag-input-box {
+  width: 150px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline !important;
+  border: none !important;
+}
+.listed-tag-name {
+  background-color: #577bc1;
+  padding: 2px 5px;
+  border: 1px solid black;
+  margin-right: 5px;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+.listed-tag-name-deletor {
+  margin-left: 5px;
+}
+.article-tags ul {
+  border: 1px solid #365899;
+  list-style-type: none;
+  padding: 5px;
 }
 .feed-options {
   display: flex;

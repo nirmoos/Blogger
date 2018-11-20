@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_17_073708) do
+ActiveRecord::Schema.define(version: 2018_11_19_091310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(version: 2018_11_17_073708) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "article_tags", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "articles", force: :cascade do |t|
@@ -98,12 +105,10 @@ ActiveRecord::Schema.define(version: 2018_11_17_073708) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.bigint "article_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id", "name"], name: "index_tags_on_article_id_and_name", unique: true
-    t.index ["article_id"], name: "index_tags_on_article_id"
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -122,5 +127,4 @@ ActiveRecord::Schema.define(version: 2018_11_17_073708) do
   add_foreign_key "bbcs", "abcs", column: "abcs_id"
   add_foreign_key "comments", "articles"
   add_foreign_key "followers", "users"
-  add_foreign_key "tags", "articles"
 end

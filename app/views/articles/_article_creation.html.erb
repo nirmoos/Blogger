@@ -5,7 +5,7 @@
     <div class="article-tags">
       <ul id="article-tag-list">
         <li>
-          <input type="text" id="tag-name" onkeyup="onTagSubmit(event)" class="tag-input-box" placeholder="enter tag name..." name="tagName" />
+          <input type="text" id="tag-name" onkeypress="return event.keyCode!=13" onkeyup="onTagSubmit(event)" class="tag-input-box" placeholder="enter tag name..." name="tagName" />
         </li>
       </ul>
     </div>

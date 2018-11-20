@@ -90,7 +90,6 @@ function showDraftedArticles (event) {
   );
 }
 function onTagSubmit(event) {
-  event.preventDefault();
   if (event.keyCode == 13) {
     $("#article-tag-list").prepend(
       $('<li />', { class: "listed-tag-name", text: event.target.value, onclick: "deleteTagName(event)" }).append(
@@ -103,7 +102,7 @@ function onTagSubmit(event) {
   }
 }
 function onArticleSubmit(event) {
-  event.preventDefault();
+  // event.preventDefault();
 }
 function deleteTagName(event) {
   $(event.target).remove();

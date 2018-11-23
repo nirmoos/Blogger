@@ -3,6 +3,10 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.where({ ispublic: true, is_drafted: false })
     @drafted_articles = Article.where({ user_id: current_user.id, is_drafted: true })
+    respond_to do |format|
+      format.html
+      format.json { render 'index.json.jbuilder' }
+    end
   end
 
   def create

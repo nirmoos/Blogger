@@ -38,10 +38,10 @@
   <div>
     <div class="flex-layout-bottom-image">
       <div class="flex-layout-bottom-image-inner">
-        <div><div class="indicator">Articles</div><div class="all-counter"><%= @user.articles.count %></div></div>
-        <div><div class="indicator">Following</div><div class="all-counter"><%= @user.following.count %></div></div>
-        <div><div class="indicator">Followers</div><div class="all-counter"><%= @user.followers.count %></div></div>
-        <div><div class="indicator">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
+        <div><div class="indicator" data-id="<%= @user.id %>" onclick="article.updateArticles(event)">Articles</div><div class="all-counter"><%= @user.articles.count %></div></div>
+        <div><div class="indicator" data-id="<%= @user.id %>" onclick="user.updateUsers(event)">Following</div><div class="all-counter"><%= @user.following.count %></div></div>
+        <div><div class="indicator" data-id="<%= @user.id %>" onclick="user.updateUsers(event)">Followers</div><div class="all-counter"><%= @user.followers.count %></div></div>
+        <div><div class="indicator" data-id="<%= @user.id %>" onclick="article.updateArticles(event)">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
       </div>
       <div class="optional-follow"><span><%= current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %></span></div>
     </div>

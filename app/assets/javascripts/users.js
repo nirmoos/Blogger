@@ -1,3 +1,32 @@
+class Article {
+  constructor () {
+    this.articles = [];
+    this.active = 'articles';
+  }
+  updateArticles(event) {
+    $.ajax({
+      method: "GET",
+      url: "/articles/index.json",
+      data: { id: event.target.dataset.id }
+    })
+    .done(function (data) {
+
+    });
+  }
+}
+class User {
+  constructor () {
+    this.user = [];
+    this.active = 'following';
+  }
+  updateUsers(event) {
+
+  }
+}
+
+const article = new Article();
+const user = new User();
+
 function followOrUnfollow () {
   let option = $('.show-user-follow').text();
   let user_id_to_follow = $('.show-user-follow').data('id');

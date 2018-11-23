@@ -55,13 +55,20 @@
   margin-right: 50px;
   padding-top: 7px;
 }
+.flex-layout-bottom-image-inner > div {
+  color: rgb(101, 119, 134);
+}
+.flex-layout-bottom-image-inner > div:hover {
+  background-color: rgb(102, 117, 127);
+  cursor: pointer;
+  color: #fff !important;
+}
 .flex-layout-bottom-image-inner {
   display: flex;
   justify-content: space-around;
   margin-left: 400px;
 }
 .all-counter {
-  color: rgb(101, 119, 134);
   display: block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
@@ -69,8 +76,6 @@
   line-height: 18px;
 }
 .indicator {
-  color: rgb(101, 119, 134);
-  cursor: default;
   letter-spacing: .02em;
   display: block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

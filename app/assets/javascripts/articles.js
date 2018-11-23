@@ -1,23 +1,52 @@
 
 function onSearchButtonClick () {
   let text = $('.search-container input').val();
+  let action = text.slice(0, 1);
+  let operation = action == '@' ? 'article' : (action == '#' ?  'tag' : 'user');
+  let search_text = (action === '@' || action === '#') ? text.slice(1, text.length) : text;
+  if (search_text.length == 0) {
+    $('.search-results').hide();
+    return;
+  }
   $.ajax({
-    method: "POST",
-    url: "search_user",
-    data: { search_text: text }
+    method: "GET",
+    url: "/search_" + operation,
+    data: { search_text: search_text }
   })
   .done(function ( data ) {
     let wrapper = $('.search-results').empty().show();
-    for ( let obj of data ){
-      let a = $('<a href='+ '/users/'+ obj.id +'></a>').text(obj.firstname + ' ' + obj.lastname);
-      wrapper.append($('<hr>'), $('<div></div>').append(a));
+    switch (operation) {
+      case 'user':
+        for ( let obj of data ){
+          let a = $('<a href='+ '/users/'+ obj.id +'></a>').text(obj.firstname + ' ' + obj.lastname);
+          wrapper.append($('<hr>'), $('<div></div>').append(a));
+        }
+        break;
+      case 'article':
+        for ( let obj of data ){
+          title = obj.title
+          pos = title.search(search_text);
+          let a = $('<a href='+ '/articles/'+ obj.id +'></a>').html('@' + title.slice(0, pos) + "<span class='title-highlighter'>" + title.slice(pos, search_text.length + pos) + "</span>" + title.slice(search_text.length + pos, title.length));
+          wrapper.append($('<hr>'), $('<div></div>').append(a));
+        }
+        break;
+      case 'tag':
+        for ( let obj of data ){
+          name = obj.name
+          pos = name.search(search_text);
+          let a = $('<a href='+ '/tags/'+ obj.id +'></a>').html('#' + name.slice(0, pos) + "<span class='title-highlighter'>" + name.slice(pos, search_text.length + pos) + "</span>" + name.slice(search_text.length + pos, name.length));
+          wrapper.append($('<hr>'), $('<div></div>').append(a));
+        }
+        break;
+      default:
+
     }
   });
 }
 function makeItDraft () {
   $.ajax({
     method: "POST",
-    url: "articles/draft",
+    url: "/articles/draft",
     data: {
       "article": {
         "title": $("#article_title").val(),
@@ -30,7 +59,7 @@ function makeItDraft () {
   })
   .done(function ( data ) {
     $("#show-drafted-articles").append(
-      $('<a class="dropdown-item" href=/articles/${data.id}>' + $("#article_title").val() + '</a>')
+      $('<a class="dropdown-item" href=/articles/${data.id}.json>' + $("#article_title").val() + '</a>')
     );
     $("#article_title").val("");
     $("#article_content").val("");
@@ -41,7 +70,7 @@ function onLikeButtonClick (event, source) {
   let text = event.target.textContent.trim().toLowerCase();
   $.ajax({
     method: "POST",
-    url: "users/likes",
+    url: "/users/likes",
     data: {
       source: source,
       id: event.target.dataset.id,
@@ -68,8 +97,7 @@ function onCommentClick ( event ) {
       $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
       $('<div />', { class: 'cancel-save-wrapper' }).append(
-        // $('<button />', { text: 'Cancel', onclick: 'onCommentClick(event)', type: 'button' }),
-        $('<input />', { type: 'submit', class: 'comment-submit', value: 'Save' })
+        $('<input />', { type: 'submit', style: 'display: none;', class: 'comment-submit', value: 'Save' })
       ),
     )
   )
@@ -78,7 +106,7 @@ function onCommentClick ( event ) {
 function showDraftedArticles (event) {
   event.preventDefault();
   $.get(
-    $(event.target).attr("href"),
+    $(event.target).attr("href")+'.json',
     function( data ) {
       $("#article_title").val(data.title);
       $("#article_content").val(data.content);
@@ -102,6 +130,14 @@ function onTagSubmit(event) {
   }
 }
 function onArticleSubmit(event) {
+  let jObjects = $(".listed-tag-name");
+  let jLength = $(".listed-tag-name").length;
+  for (let i=0; i<jLength; i++) {
+    $("#article_ispublic").after(
+      $('<input />', { name: 'article[tags][' + i + ']', style: 'display: none;', type: 'text', value: jObjects[i].textContent }),
+    );
+  }
+
   // event.preventDefault();
 }
 function deleteTagName(event) {

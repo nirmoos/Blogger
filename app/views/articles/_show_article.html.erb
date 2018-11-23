@@ -1,0 +1,57 @@
+<section class='article-list'>
+  <% user = @article.user %>
+  <div class="article-list-creator">
+    <div class="image-creator-wrapper">
+      <div class="image-wrapper">
+        <%= user_avatar(user.id) %>
+      </div>
+      <div class="owner-wrapper">
+        <div class="article-owner">
+          <%= link_to user.firstname + " " + user.lastname, user_path(user) %>
+        </div>
+        <div class="creation-time">
+          <%= @article.created_at %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="article-list-tags">
+    <% @article.tags.each do | tag | %>
+      <span class="tagger"><%= '#' + tag.name %></span>
+    <% end %>
+  </div>
+  <div class='article-list-header'><%= @article.title %></div>
+  <div class='article-list-body'><%= @article.content %></div>
+  <hr>
+  <div class="likes-comments-counter">
+    <div><%= @article.likes.count %> likes</div>
+    <div><%= get_total_comments_count(@article) %> comments</div>
+  </div>
+  <hr>
+  <div class='article-list-footer'>
+    <div class="article-like" data-id="<%= @article.id %>" onclick="onLikeButtonClick(event, 'article')">
+      <% like = Like.find_by(
+        user_id: current_user.id,
+        likable_type: 'Article',
+        likable_id: @article.id,
+      ) %>
+      <% if current_user.likes.include?(like) %>
+        <i class="far fa-thumbs-down"></i>
+      <% else %>
+        <i class="far fa-thumbs-up"></i>
+      <% end %>
+      <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
+    </div>
+    <div class="article-comment" onclick="onCommentClick(event)" data-belong="article" data-id="<%= @article.id %>"><i class="far fa-comment"></i>Comment</div>
+  </div>
+  <hr>
+  <div class='comment-list'>
+    <%= render partial: 'articles/list_comments', locals: { comments: @article.comments, index: 0 } %>
+  </div>
+
+  <% if current_user.admin? %>
+    <%= link_to article_path(@article), method: :delete do %>
+      <span class="delete-button-for-admin"><i class="fas fa-trash"></i></span>
+    <% end %>
+  <% end %>
+</section>

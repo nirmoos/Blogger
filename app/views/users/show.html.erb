@@ -1,4 +1,4 @@
-<% provide(:title, 'user') %>
+<!-- <% provide(:title, 'user') %>
 
 <main class='show-user'>
   <header>
@@ -27,6 +27,30 @@
     </div>
   </header>
 
-  <%= render partial: 'articles/list_articles' %>
+  <%= render partial: 'articles/list_articles' %> -->
 
+</main>
+<main>
+  <div class="user-cover-wrapper">
+    <div class="user-cover-pic"><span><%= user_cover(@user.id) %></span></div>
+    <div class="user-image-pic"><span><%= user_avatar(@user.id) %></span></div>
+  </div>
+  <div>
+    <div class="flex-layout-bottom-image">
+      <div class="flex-layout-bottom-image-inner">
+        <div><div class="indicator">Articles</div><div class="all-counter"><%= @user.articles.count %></div></div>
+        <div><div class="indicator">Following</div><div class="all-counter"><%= @user.following.count %></div></div>
+        <div><div class="indicator">Followers</div><div class="all-counter"><%= @user.followers.count %></div></div>
+        <div><div class="indicator">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
+      </div>
+      <div class="optional-follow"><span><%= current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %></span></div>
+    </div>
+  </div>
+  <div class="user-page-main">
+    <div class="user-page-profile-viewer">
+      <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
+      <div class='show-user-email'><%= @user.email %></div>
+    </div>
+    <div></div>
+    <div></div>
 </main>

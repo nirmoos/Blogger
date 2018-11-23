@@ -16,6 +16,11 @@
         </div>
       </div>
     </div>
+    <div class="article-list-tags">
+      <% article.tags.each do | tag | %>
+        <span class="tagger"><%= '#' + tag.name %></span>
+      <% end %>
+    </div>
     <div class='article-list-header'><%= article.title %></div>
     <div class='article-list-body'><%= article.content %></div>
     <hr>
@@ -45,10 +50,6 @@
       <%= render partial: 'articles/list_comments', locals: { comments: article.comments, index: 0 } %>
     </div>
 
-    <!-- <%= link_to 'Edit', edit_article_path(article) %> -->
-    <!-- <%= link_to 'Destroy', article_path(article),
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %> -->
     <% if current_user.admin? %>
       <%= link_to article_path(article), method: :delete do %>
         <span class="delete-button-for-admin"><i class="fas fa-trash"></i></span>

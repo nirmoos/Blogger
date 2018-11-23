@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:draft]
 
   def index
     @articles = Article.where({ ispublic: true, is_drafted: false })
@@ -11,15 +10,29 @@ class ArticlesController < ApplicationController
       article = Article.find_by(id: params[:article][:id])
       article.update_attributes(is_drafted: false, title: params[:article][:title], content: params[:article][:content], ispublic: params[:article][:ispublic])
     else
-      current_user.articles.create(article_params)
+      article = current_user.articles.create(article_params)
+    end
+    if params[:article][:tags] != nil
+      params[:article][:tags].each do | key, value |
+        if Tag.find_by({ name: value }) != nil
+          tag = Tag.find_by({ name: value })
+        else
+          tag = Tag.create(name: value)
+        end
+        article.article_tags.create(tag: tag)
+      end
     end
 
-    redirect_to articles_path
+    redirect_to root_path
   end
 
   def show
-    article = Article.find(params[:id])
-    render json: article.as_json(only: [:id, :title, :content, :ispublic])
+    @article = Article.find(params[:id])
+    @drafted_articles = Article.where({ user_id: current_user.id, is_drafted: true })
+    respond_to do |format|
+      format.html
+      format.json { render json: @article.as_json(only: [:id, :title, :content, :ispublic]) }
+    end
   end
 
   def draft
@@ -38,6 +51,12 @@ class ArticlesController < ApplicationController
     article.destroy
 
     redirect_to root_path
+  end
+
+  def search
+    search_text = params[:search_text]
+    articles = Article.select('id', 'title').where('title LIKE ?', "%#{search_text}%")
+    render json: articles
   end
 
   def allfeed

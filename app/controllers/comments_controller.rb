@@ -1,12 +1,12 @@
 class CommentsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
+
   def create
     if params[:comment][:belong] == 'article'
-      @instance = Article.find(params[:comment][:id]);
-      @instance.comments.create(user_id: current_user.id, body: params[:comment][:body]);
+      article = Article.find(params[:comment][:id]);
+      article.comments.create(user_id: current_user.id, body: params[:comment][:body]);
     else
-      @instance = Comment.find(params[:comment][:id]);
-      @instance.replies.create(user_id: current_user.id, body: params[:comment][:body]);
+      comment = Comment.find(params[:comment][:id]);
+      comment.replies.create(user_id: current_user.id, body: params[:comment][:body]);
     end
 
     redirect_to root_path

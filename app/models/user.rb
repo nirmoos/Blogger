@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   has_one_attached :avatar
+  has_one_attached :cover
 
   def is_blocked?
     is_blocked

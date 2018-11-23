@@ -22,6 +22,10 @@ Rails.application.routes.draw do
       post 'likes'
     end
   end
-  post '/search_user', to: 'users#search_user'
+  get '/search_user', to: 'users#search'
+  get '/search_article', to: 'articles#search'
+  get '/search_tag', to: 'tags#search'
+
+  get '/tags/:id', to: 'tags#index'
 
 end

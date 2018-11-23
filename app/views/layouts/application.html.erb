@@ -14,7 +14,9 @@
   <body>
     <% if current_user %>
       <%= render 'layouts/header_navbar' %>
-      <%= render 'layouts/user_profile' %>
+      <% if params[:controller] == 'articles' %>
+        <%= render 'layouts/user_profile' %>
+      <% end %>
     <% end %>
     <%= yield %>
   </body>

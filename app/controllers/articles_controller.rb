@@ -1,12 +1,22 @@
 class ArticlesController < ApplicationController
 
   def index
+    respond_to do |format|
+      format.html { index_html }
+      format.json { index_json }
+    end
+  end
+
+  def index_html
     @articles = Article.where({ ispublic: true, is_drafted: false })
     @drafted_articles = Article.where({ user_id: current_user.id, is_drafted: true })
-    respond_to do |format|
-      format.html
-      format.json { render 'index.json.jbuilder' }
-    end
+  end
+  def index_json
+    @user = User.find(params[:id])
+    @articles = @user.articles
+    @users = User.where(id: @articles.select(:user_id))
+
+    render 'index.json.jbuilder'
   end
 
   def create

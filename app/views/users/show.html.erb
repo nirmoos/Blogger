@@ -1,35 +1,3 @@
-<!-- <% provide(:title, 'user') %>
-
-<main class='show-user'>
-  <header>
-    <div>
-      <div>
-        <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
-        <div><div class='show-user-email'><%= @user.email %></div></div>
-      </div>
-      <div class='show-user-options'>
-        <div class='show-user-follow' onclick='followOrUnfollow()' data-id=<%= @user.id %>>
-          <%= current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %>
-        </div>
-        <% if current_user.admin? %>
-          <div class='show-user-block' onclick='blockOrUnblock()' data-id=<%= @user.id %>>
-            <%= @user.is_blocked?  ? 'Unblock' : 'Block' %>
-          </div>
-        <% end %>
-        <div class="follow-user-btn">
-          Follow
-        </div>
-      </div>
-    </div>
-    <div class='show-user-follower-followyee'>
-      <div>Followers<div><%= @user.followers.count %></div></div>
-      <div>Following<div><%= @user.following.count %></div></div>
-    </div>
-  </header>
-
-  <%= render partial: 'articles/list_articles' %> -->
-
-</main>
 <main>
   <div class="user-cover-wrapper">
     <div class="user-cover-pic"><span><%= user_cover(@user.id) %></span></div>
@@ -38,12 +6,19 @@
   <div>
     <div class="flex-layout-bottom-image">
       <div class="flex-layout-bottom-image-inner">
-        <div><div class="indicator" data-id="<%= @user.id %>" onclick="article.updateArticles(event)">Articles</div><div class="all-counter"><%= @user.articles.count %></div></div>
-        <div><div class="indicator" data-id="<%= @user.id %>" onclick="user.updateUsers(event)">Following</div><div class="all-counter"><%= @user.following.count %></div></div>
-        <div><div class="indicator" data-id="<%= @user.id %>" onclick="user.updateUsers(event)">Followers</div><div class="all-counter"><%= @user.followers.count %></div></div>
-        <div><div class="indicator" data-id="<%= @user.id %>" onclick="article.updateArticles(event)">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
+        <div><div class="indicator" id="first-indicator" data-for="article" data-id="<%= @user.id %>" onclick="ajaxCallforDataRendering(event)">Articles</div><div class="all-counter"><%= @user.articles.count %></div></div>
+        <div><div class="indicator" data-for="following" data-id="<%= @user.id %>" onclick="ajaxCallforDataRendering(event)">Following</div><div class="all-counter"><%= @user.following.count %></div></div>
+        <div><div class="indicator" data-for="followers" data-id="<%= @user.id %>" onclick="ajaxCallforDataRendering(event)">Followers</div><div class="all-counter"><%= @user.followers.count %></div></div>
+        <div><div class="indicator" data-for="likes" data-id="<%= @user.id %>" onclick="ajaxCallforDataRendering(event)">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
       </div>
-      <div class="optional-follow"><span><%= current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %></span></div>
+      <div class="block-follow-wrapper">
+        <% user_following_action = current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %>
+        <div class="optional-follow"  onclick='followOrBlock(event)' data-action="<%= user_following_action %>" data-id="<%= @user.id %>"><%= user_following_action %></div>
+        <% if current_user.admin? %>
+          <% user_blocked_status = @user.is_blocked?  ? 'Unblock' : 'Block' %>
+          <div class='show-user-option-to-block' onclick='followOrBlock(event)' data-id="<%= @user.id %>" data-action="<%= user_blocked_status %>"><%= user_blocked_status %></div>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="user-page-main">
@@ -51,6 +26,7 @@
       <div class='show-user-name'><%= @user.firstname + ' ' + @user.lastname %></div>
       <div class='show-user-email'><%= @user.email %></div>
     </div>
+    <div class="user-page-render-space"></div>
     <div></div>
-    <div></div>
+  </div>
 </main>

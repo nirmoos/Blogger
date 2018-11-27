@@ -3,13 +3,14 @@ class CommentsController < ApplicationController
   def create
     if params[:comment][:belong] == 'article'
       article = Article.find(params[:comment][:id]);
-      article.comments.create(user_id: current_user.id, body: params[:comment][:body]);
+      @comment = article.comments.create(user_id: current_user.id, body: params[:comment][:body]);
     else
       comment = Comment.find(params[:comment][:id]);
-      comment.replies.create(user_id: current_user.id, body: params[:comment][:body]);
+      @comment = comment.replies.create(user_id: current_user.id, body: params[:comment][:body]);
     end
-
-    redirect_to root_path
+    # respond_to do |format|
+    #   format.json { create.json.jbuilder }
+    # end
   end
 
   def update

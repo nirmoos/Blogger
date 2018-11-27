@@ -45,15 +45,20 @@
 .flex-layout-bottom-image-inner > div {
   padding: 8px 10px;
 }
-.optional-follow span {
+.optional-follow:hover, .show-user-option-to-block:hover {
+  cursor: pointer;
+  background-color: #fff;
+}
+.optional-follow, .show-user-option-to-block {
+  margin-right: 20px;
   padding: 5px 20px;
-  display: inline-block;
-  border-radius: 10px;
+  // display: inline-block;
+  border-radius: 30px;
   border: 1px solid #29487d;
 }
 .optional-follow {
-  margin-right: 50px;
-  padding-top: 7px;
+  // margin-right: 50px;
+  // padding-top: 7px;
 }
 .flex-layout-bottom-image-inner > div {
   color: rgb(101, 119, 134);
@@ -189,7 +194,6 @@
 }
 .user-page-main {
   display: flex;
-  justify-content: space-between;
 }
 .user-avatar-in-profile img {
   max-width: 72px;

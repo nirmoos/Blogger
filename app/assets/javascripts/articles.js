@@ -23,7 +23,7 @@ function onSearchButtonClick () {
         }
         break;
       case 'article':
-        for ( let obj of data ){
+        for ( let obj of data ) {
           title = obj.title
           pos = title.search(search_text);
           let a = $('<a href='+ '/articles/'+ obj.id +'></a>').html('@' + title.slice(0, pos) + "<span class='title-highlighter'>" + title.slice(pos, search_text.length + pos) + "</span>" + title.slice(search_text.length + pos, title.length));
@@ -86,27 +86,69 @@ function onLikeButtonClick (event, source) {
   })
 }
 
-function onCommentClick ( event ) {
+// function onCommentClick ( event ) {
+//   if ($('.comment-form-wrapper').length === 1) {
+//     $('.comment-form-wrapper').remove();
+//     return
+//   }
+//   let div = $('<div />', { class: 'comment-form-wrapper'}).append(
+//     $('<form />', { action: '/create_comment', method: 'POST' }).append(
+//       $('<input />', { name: 'comment[belong]', style: 'display: none;', type: 'text', value: event.target.dataset.belong }),
+//       $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
+//       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
+//       $('<div />', { class: 'cancel-save-wrapper' }).append(
+//         $('<input />', { type: 'submit', style: 'display: none;', class: 'comment-submit', value: 'Save' })
+//       ),
+//     )
+//   )
+//   $(event.target).parent().after(div);
+// }
+
+function onCommentClickAjax ( event ) {
   if ($('.comment-form-wrapper').length === 1) {
     $('.comment-form-wrapper').remove();
     return
   }
   let div = $('<div />', { class: 'comment-form-wrapper'}).append(
-    $('<form />', { action: 'create_comment', method: 'POST' }).append(
-      $('<input />', { name: 'comment[belong]', style: 'display: none;', type: 'text', value: event.target.dataset.belong }),
-      $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
-      $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
-      $('<div />', { class: 'cancel-save-wrapper' }).append(
-        $('<input />', { type: 'submit', style: 'display: none;', class: 'comment-submit', value: 'Save' })
-      ),
-    )
-  )
+    $("<input />", {
+      type: 'text',
+      class: 'comment-new',
+      placeholder: 'write your reply here...',
+      onkeyup: 'createThisComment(event)',
+     }).attr({
+      'data-belong': event.target.dataset.belong,
+      'data-id': event.target.dataset.id
+    }),
+  );
   $(event.target).parent().after(div);
+}
+function createThisComment(event) {
+  if (event.keyCode != 13)
+    return;
+  let belong = event.target.dataset.belong;
+  let id = event.target.dataset.id;
+  let body = $(event.target).val();
+  $.ajax({
+    method: "POST",
+    url: "/create_comment.json",
+    data: {
+      'comment': {
+        'belong': belong,
+        'id': id,
+        'body': body,
+      },
+    },
+    success: function (data) {
+      $(event.target).replaceWith(
+        createandAppendNewComment(data),
+      );
+    },
+  })
 }
 function showDraftedArticles (event) {
   event.preventDefault();
   $.get(
-    $(event.target).attr("href")+'.json',
+    $(event.target).attr("href") + '.json',
     function( data ) {
       $("#article_title").val(data.title);
       $("#article_content").val(data.content);
@@ -142,4 +184,36 @@ function onArticleSubmit(event) {
 }
 function deleteTagName(event) {
   $(event.target).remove();
+}
+function createandAppendNewComment({ comment, user }) {
+  $("<div />", { class: 'comment-wrapper' }).append(
+    $("<div />", { class: 'comment-header' }).append(
+      $("<div />", { class: 'image-comment-wrapper' }).append(
+        $("<div />", { class: 'comment-image' }).append(
+          $("<img />", { href: '#' }),
+        ),
+      ),
+      $("<div />", { class: 'comment-only-wrapper' }).append(
+        $("<span />", { class: 'commenter-name' }).text(
+          user.firstname + ' ' + user.lastname
+        ),
+        $("<span />", { class: 'commenter-body' }).text(
+          comment.body
+        ),
+        $("<div />", { class: 'comment-likes-count' }).append(
+          $("<i />", { class: 'fas fa-thumbs-up' }),
+        ).text(comment.likes),
+      )
+    ),
+    $("<div />", { class: "comment-footer" }).append(
+      $("<span />", { class: "like-box", onclick: "onLikeButtonClick(event, 'comment')" }).append(
+      ).attr({ id: comment.id }).text(comment.like_status),
+      $("<span />").text('.'),
+      $("<span />", { class: "comment-box", onclick: "onCommentClickAjax(event)" }).attr({ belong: 'comment', id: comment.id }).text(
+        'Comment'
+      ),
+      $("<span />").text('.'),
+      $("<span />").text(comment.created_at),
+    ),
+  )
 }

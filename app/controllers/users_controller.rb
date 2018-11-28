@@ -32,6 +32,18 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def user_followers
+    user = User.find(params[:id])
+    @users = user.followers
+    render 'users_list.json.jbuilder'
+  end
+
+  def user_followings
+    user = User.find(params[:id])
+    @users = user.following
+    render 'users_list.json.jbuilder'
+  end
+
   def likes
     if params[:option] == 'like'
       if params[:source] == 'article'

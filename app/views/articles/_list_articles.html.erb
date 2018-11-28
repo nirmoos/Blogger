@@ -11,14 +11,16 @@
             <%= link_to user.firstname + " " + user.lastname, user_path(user) %>
           </div>
           <div class="creation-time">
-            <%= article.created_at %>
+            <%= time_ago_in_words(article.created_at) + ' ago' %>
           </div>
         </div>
       </div>
     </div>
     <div class="article-list-tags">
       <% article.tags.each do | tag | %>
-        <span class="tagger"><%= '#' + tag.name %></span>
+        <%= link_to tag_path(tag.id) do %>
+          <span class="tagger"><%= '#' + tag.name %></span>
+        <% end %>
       <% end %>
     </div>
     <div class='article-list-header'><%= article.title %></div>
@@ -30,12 +32,12 @@
     </div>
     <hr>
     <div class='article-list-footer'>
-      <div class="article-like" data-id="<%= article.id %>" onclick="onLikeButtonClick(event, 'article')">
-        <% like = Like.find_by(
-          user_id: current_user.id,
-          likable_type: 'Article',
-          likable_id: article.id,
+      <% like = Like.find_by(
+        user_id: current_user.id,
+        likable_type: 'Article',
+        likable_id: article.id,
         ) %>
+      <div class="article-like" data-action="<%= current_user.likes.include?(like) ? 'unlike' : 'like' %>" data-id="<%= article.id %>" onclick="onLikeButtonClick(event, 'article')">
         <% if current_user.likes.include?(like) %>
           <i class="far fa-thumbs-down"></i>
         <% else %>

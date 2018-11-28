@@ -21,12 +21,12 @@
       <div></div>
     </div>
     <div class="comment-footer">
-      <span class="like-box" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">
-        <% like = Like.find_by(
-          user_id: current_user.id,
-          likable_type: 'Comment',
-          likable_id: comment.id,
+      <% like = Like.find_by(
+        user_id: current_user.id,
+        likable_type: 'Comment',
+        likable_id: comment.id,
         ) %>
+      <span class="like-box" data-action="<%= current_user.likes.include?(like) ? 'unlike' : 'like' %>" data-id="<%= comment.id %>" onclick="onLikeButtonClick(event, 'comment')">
         <%= current_user.likes.include?(like) ? 'Unlike' : 'Like' %>
       </span><span>.</span>
       <span class="comment-box" onclick="onCommentClick(event)" data-belong="comment" data-id="<%= comment.id %>">Comment</span>
@@ -41,7 +41,7 @@
         </span>
       <% end %>
       <span>.<span>
-      <span><%= comment.created_at %></span>
+      <span><%= time_ago_in_words(comment.created_at) + ' ago' %></span>
     </div>
     <%= render partial: 'articles/list_comments', locals: { comments: comment.replies, index: index + 1 } %>
   </div>

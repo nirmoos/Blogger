@@ -21,63 +21,127 @@ class User {
   }
   updateUserList(users) {
     this.users = users;
-    // console.log(this.users, users);
   }
-  // updateandRender(event, users) {
-  //   this.users = users;
-  //   for (let user of users) {
-  //     renderUsers(user);
-  //   }
-  // }
+  addUsers(users) {
+    this.users.push(...users);
+  }
   getFullname(id) {
-    // console.log('id:', id);
-    // console.log('users:', this.users);
-    // console.log(this.users, id);
-    let user = this.users.filter((user) => user.id == id);
-    // console.log('user:', user);
-    return user.firstname + ' ' + user.lastname;
+    let user = this.findUser(id);
+    return user[0].firstname + ' ' + user[0].lastname;
+  }
+  getUserImage(id) {
+    let user = this.findUser(id);
+    return user[0].image
+  }
+  findUser(id) {
+    return this.users.filter((user) => user.id == id);
   }
 }
 
 const user = new User();
 
-function ajaxCallforDataRendering (event) {
-  let url;
-  let action;
-  switch (event.target.dataset.for) {
-    case 'article':
-        url = 'articles.json';
-        action = 'article';
-      break;
-    case 'likes':
-        url = 'likes.json';
-        action = 'like';
-      break;
-    case 'followers':
-        url = 'followers.json';
-        action = 'user';
-      break;
-    case 'following':
-        url = 'following.json';
-        action = 'user';
-      break;
-    default:
+$(document).ready(function() {
+  $(".indicator_parent").on("click", function(event) {
+    var data_for = $(this).attr("data-for");
+    var data_id = $(this).attr("data-id");
 
-  }
-  $.ajax({
-    method: "GET",
-    url: '/' + url,
-    data: { id: event.target.dataset.id }
-  })
-  .done(function (data) {
-    article.updateandRender(event, data.articles);
-    user.updateUserList(data.users);
-    // console.log(data.users);
+    switch (data_for) {
+      case 'article':
+          url = 'articles.json';
+          action = 'article';
+        break;
+      case 'likes':
+          url = 'likes.json';
+          action = 'like';
+        break;
+      case 'followers':
+          url = 'user_followers.json';
+          action = 'user';
+        break;
+      case 'following':
+          url = 'user_followings.json';
+          action = 'user';
+        break;
+      default:
+
+    }
+    $.ajax({
+      method: "GET",
+      url: '/' + url,
+      data: { id: data_id }
+    })
+    .done(
+      function (data) {
+        switch (action) {
+          case 'article':
+          case 'like':user.updateUserList(data.users);
+                      article.updateandRender(event, data.articles);
+                      break;
+          case 'user':() => {
+                $(".user-page-render-space").append(
+                  $("<div />", { class: 'user-list-wrapper' }).append(
+                    data.users.map( user => renderUsers( user ) ),
+                  ),
+                );
+          }
+        }
+      }
+    );
   });
-}
+});
 
+// function ajaxCallforDataRendering (event) {
+//   let url;
+//   let action;
+//   switch (event.target.dataset.for) {
+//     case 'article':
+//         url = 'articles.json';
+//         action = 'article';
+//       break;
+//     case 'likes':
+//         url = 'likes.json';
+//         action = 'like';
+//       break;
+//     case 'followers':
+//         url = 'user_followers.json';
+//         action = 'user';
+//       break;
+//     case 'following':
+//         url = 'user_followings.json';
+//         action = 'user';
+//       break;
+//   }
+//   $.ajax({
+//     method: "GET",
+//     url: '/' + url,
+//     data: { id: event.target.dataset.id }
+//   })
+//   .done(function (data) {
+//     switch (event.target.dataset.for) {
+//       case 'article':
+//       case 'like':user.updateUserList(data.users);
+//                   article.updateandRender(event, data.articles);
+//                   break;
+//       case 'user':() => {
+//             $(".user-page-render-space").append(
+//               $("<div />", { class: 'user-list-wrapper' }).append(
+//                 data.users.map( user => renderUsers( user ) ),
+//               ),
+//             );
+//       }
+//     }
+//   })
+// }
 
-$("#first-indicator").click();
+// let div_wrapper_for_user_list = $("<div />", { class: 'user-list-wrapper' });
+//
+// for (let user in data.users) {
+//   div_wrapper_for_user_list.append(renderUsers(user));
+// }
+// $(".user-page-render-space").append(div_wrapper_for_user_list);
+
+setTimeout(function(){ $("#first-indicator").click(); }, 1000);
+
 
 function followOrBlock (event) {
   let option = $(event.target).data('action');
@@ -100,14 +164,34 @@ function followOrBlock (event) {
     },
   });
 }
-
+function loadMoreComments(event, isFirst) {
+  $.ajax({
+    method: 'get',
+    url: '/load_comments.json',
+    data: {
+      belong: event.target.dataset.belong,
+      id: event.target.dataset.id,
+    },
+    success: function (data) {
+      user.addUsers(data.users);
+      let parent = $(event.target).parent();
+      $(event.target).remove();
+      for (let comment of data.comments) {
+        if (isFirst != undefined)
+          parent.prepend(createandAppendThisComment(comment, event.target.dataset.belong))
+        else
+          parent.append(createandAppendThisComment(comment, event.target.dataset.belong))
+      }
+    },
+  });
+}
 function renderArticles(article) {
   $(".user-page-render-space").append(
     $("<section />", { class: "article-list" }).append(
       $("<div />", { class: "article-list-creator" }).append(
         $("<div />", { class: "image-creator-wrapper" }).append(
           $("<div />", { class: "image-wrapper" }).append(
-            $("<img />", { src: ""})
+            $(user.getUserImage(article.user_id))
           ),
           $("<div />", { class: "owner-wrapper" }).append(
             $("<div />", { class: "article-owner" }).append(
@@ -119,7 +203,9 @@ function renderArticles(article) {
       ),
       $("<div />", { class: "article-list-tags"}).append(
         article.tags.map(tag =>
-          $("<span />", { class: "tagger" }).text('#' + tag)
+          $("<a />", { href: '/tags/' + tag.id }).append(
+            $("<span />", { class: "tagger" }).text('#' + tag.name + ' '),
+          ),
         )
       ),
       $("<div />", { class: "article-list-header" }).text(article.title),
@@ -131,15 +217,86 @@ function renderArticles(article) {
       ),
       $("<hr />"),
       $("<div />", { class: "article-list-footer" }).append(
-        $("<div />", { class: "article-like", onclick: "onLikeButtonClick(event, 'article')"}).attr({ 'data-id': article.id }).append(
+        $("<div />", { class: "article-like", onclick: "onLikeButtonClick(event, 'article')"}).attr({ 'data-id': article.id, 'data-action': article.like_status.toLowerCase() }).append(
           $("<i />", { class: "far fa-thumbs-up"})
-        ).text("Like"),
+        ).text(article.like_status),
         $("<div />", { class: "article-comment", onclick: "onCommentClickAjax(event)" }).attr({ 'data-belong': "article", 'data-id': article.id }).append(
           $("<i />", { class: "far fa-comment "}).text('Comment')
         )
       ),
       $("<hr />"),
+      $("<div />", { class: "comment-list" }).append(
+        article.comments ? $("<div />", { class: "load-more-comments", onclick: "loadMoreComments(event, true)" }).attr({
+          'data-belong': 'article', 'data-id': article.id
+        }).text('Load more comments...') : '',
+      ),
     ),
-    $("<div />", { class: "comment-list" }).text(article.comments ? "Show all comments" : '')
   );
+}
+function createandAppendThisComment(comment, belong) {
+  let div = $("<div />", { class: 'comment-wrapper' }).append(
+    $("<div />", { class: 'comment-header' }).append(
+      $("<div />", { class: 'image-comment-wrapper' }).append(
+        $("<div />", { class: 'comment-image' }).append(
+          $(user.getUserImage(comment.user_id)),
+        ),
+        $("<div />", { class: 'comment-only-wrapper' }).append(
+          $("<a />", { href: '/users/' + user.id }).append(
+            $("<span />", { class: 'commenter-name' }).text(
+              user.getFullname(comment.user_id) + ' '
+            ),
+          ),
+          $("<span />", { class: 'commenter-body' }).text(
+            comment.body
+          ),
+          $("<div />", { class: 'comment-likes-count' }).text(' ' + comment.likes).prepend(
+            $("<i />", { class: 'fas fa-thumbs-up' })
+          ),
+        ),
+      ),
+    ),
+    $("<div />", { class: "comment-footer" }).append(
+      $("<span />", { class: "like-box", onclick: "onLikeButtonClick(event, 'comment')" }).append(
+      ).attr({ 'data-id': comment.id, 'data-action': comment.like_status.toLowerCase() }).text(comment.like_status),
+      $("<span />").text('.'),
+      $("<span />", { class: "comment-box", onclick: "onCommentClickAjax(event)" }).attr({ 'data-belong': 'comment', 'data-id': comment.id }).text(
+        'Comment'
+      ),
+      $("<span />").text('.'),
+      comment.replies ? $("<span />", { class: "comment-box", onclick: "loadMoreComments(event)" }).attr({ 'data-belong': 'comment', 'data-id': comment.id }).text(
+        comment.replies + ' replies'
+      ) : '',
+      $("<span />").text('.'),
+      $("<span />").text(comment.created_at),
+    ),
+
+  );
+  return div;
+}
+
+
+function renderUsers(user) {
+  let div = $("<div />", { class: "user-profile-in-list" }).append(
+    $("<div />", { class: "user-cover-image" }).append(user.cover_image),
+    $("<div />", { class: "user-avatar-in-profile" }).append(user.profile_image),
+    $("<div />", { class: "user-profile-name" }).append(
+      $("<div />", { class: "profile-name" }).text(user.firstname + ' ' + user.lastname),
+      $("<div />", { class: "profile-email" }).text(user.email),
+    ),
+    $("<div />", { class: "user-profile-footer" }).append(
+      $("<div />", { class: "article-count" }).append(
+        $("<div />").text('Articles'),
+        $("<div />").text(user.articles_count),
+      ),
+      $("<div />", { class: "following-count" }).append(
+        $("<div />").text('Following'),
+        $("<div />").text(user.followings_count),
+      ),
+      $("<div />", { class: "followers-count" }).append(
+        $("<div />").text('Followers'),
+        $("<div />").text(user.followers_count),
+      ),
+    ),
+  )
+  return div;
 }

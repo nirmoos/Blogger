@@ -12,8 +12,8 @@ class ArticlesController < ApplicationController
     @drafted_articles = Article.where({ user_id: current_user.id, is_drafted: true })
   end
   def index_json
-    @user = User.find(params[:id])
-    @articles = @user.articles
+    user = User.find(params[:id])
+    @articles = user.articles
     @users = User.where(id: @articles.select(:user_id))
 
     render 'index.json.jbuilder'

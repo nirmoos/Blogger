@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get '/search_article', to: 'articles#search'
   get '/search_tag', to: 'tags#search'
 
-  get '/tags/:id', to: 'tags#index'
-
+  get '/tags/:id', to: 'tags#index', :as => :tag
+  get '/load_comments.json', to: 'comments#load_comments'
+  get '/likes.json', to: 'likes#load_likes'
+  get '/user_followings.json', to: 'users#user_followings'
+  get '/user_followers.json', to: 'users#user_followers'
 end

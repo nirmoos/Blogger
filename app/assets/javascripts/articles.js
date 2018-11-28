@@ -1,4 +1,8 @@
 
+
+
+
+
 function onSearchButtonClick () {
   let text = $('.search-container input').val();
   let action = text.slice(0, 1);
@@ -67,7 +71,7 @@ function makeItDraft () {
   });
 }
 function onLikeButtonClick (event, source) {
-  let text = event.target.textContent.trim().toLowerCase();
+  let text = event.target.dataset.action.toLowerCase();
   $.ajax({
     method: "POST",
     url: "/users/likes",
@@ -77,7 +81,9 @@ function onLikeButtonClick (event, source) {
       option: text,
     },
     success: function () {
-      $(event.target).text(text === 'like' ? 'Unlike' : 'Like');
+      let new_option = text === 'like' ? 'Unlike' : 'Like';
+      $(event.target).text(new_option);
+      event.target.dataset.action = new_option;
       if (text === 'like' && source === 'article')
         $(event.target).prepend("<i class='far fa-thumbs-down'></i>");
       else if(text === 'unlike' && source === 'article')
@@ -86,23 +92,23 @@ function onLikeButtonClick (event, source) {
   })
 }
 
-// function onCommentClick ( event ) {
-//   if ($('.comment-form-wrapper').length === 1) {
-//     $('.comment-form-wrapper').remove();
-//     return
-//   }
-//   let div = $('<div />', { class: 'comment-form-wrapper'}).append(
-//     $('<form />', { action: '/create_comment', method: 'POST' }).append(
-//       $('<input />', { name: 'comment[belong]', style: 'display: none;', type: 'text', value: event.target.dataset.belong }),
-//       $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
-//       $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
-//       $('<div />', { class: 'cancel-save-wrapper' }).append(
-//         $('<input />', { type: 'submit', style: 'display: none;', class: 'comment-submit', value: 'Save' })
-//       ),
-//     )
-//   )
-//   $(event.target).parent().after(div);
-// }
+function onCommentClick ( event ) {
+  if ($('.comment-form-wrapper').length === 1) {
+    $('.comment-form-wrapper').remove();
+    return
+  }
+  let div = $('<div />', { class: 'comment-form-wrapper'}).append(
+    $('<form />', { action: '/create_comment', method: 'POST' }).append(
+      $('<input />', { name: 'comment[belong]', style: 'display: none;', type: 'text', value: event.target.dataset.belong }),
+      $('<input />', { name: 'comment[id]', style: 'display: none;', type: 'text', value: event.target.dataset.id }),
+      $('<input />', { name: 'comment[body]', class: 'comment-new', placeholder: 'write your comment here...', type: 'text' }),
+      $('<div />', { class: 'cancel-save-wrapper' }).append(
+        $('<input />', { type: 'submit', style: 'display: none;', class: 'comment-submit', value: 'Save' })
+      ),
+    )
+  )
+  $(event.target).parent().after(div);
+}
 
 function onCommentClickAjax ( event ) {
   if ($('.comment-form-wrapper').length === 1) {
@@ -120,7 +126,12 @@ function onCommentClickAjax ( event ) {
       'data-id': event.target.dataset.id
     }),
   );
-  $(event.target).parent().after(div);
+
+  if (event.target.dataset.belong == 'article')
+    $(event.target).parent().siblings('.comment-list').append(div);
+  else
+    $(event.target).parent().after(div);
+
 }
 function createThisComment(event) {
   if (event.keyCode != 13)
@@ -139,8 +150,8 @@ function createThisComment(event) {
       },
     },
     success: function (data) {
-      $(event.target).replaceWith(
-        createandAppendNewComment(data),
+      $(event.target).parent().replaceWith(
+        createandAppendNewComment(data, belong),
       );
     },
   })
@@ -179,41 +190,49 @@ function onArticleSubmit(event) {
       $('<input />', { name: 'article[tags][' + i + ']', style: 'display: none;', type: 'text', value: jObjects[i].textContent }),
     );
   }
-
-  // event.preventDefault();
 }
 function deleteTagName(event) {
   $(event.target).remove();
 }
-function createandAppendNewComment({ comment, user }) {
-  $("<div />", { class: 'comment-wrapper' }).append(
+function createandAppendNewComment({ comment, user }, belong) {
+  let class_name = '' + ((belong == 'comment') ? ' comment-wrapper-padding' : '')
+  let div = $("<div />", { class: class_name }).append(
     $("<div />", { class: 'comment-header' }).append(
       $("<div />", { class: 'image-comment-wrapper' }).append(
         $("<div />", { class: 'comment-image' }).append(
-          $("<img />", { href: '#' }),
+          $(user.image),
+        ),
+        $("<div />", { class: 'comment-only-wrapper' }).append(
+          $("<a />", { href: '/users/' + user.id }).append(
+            $("<span />", { class: 'commenter-name' }).text(
+              user.firstname + ' ' + user.lastname + ' '
+            ),
+          ),
+          $("<span />", { class: 'commenter-body' }).text(
+            comment.body
+          ),
+          $("<div />", { class: 'comment-likes-count' }).text(' ' + comment.likes).prepend(
+            $("<i />", { class: 'fas fa-thumbs-up' })
+          ),
         ),
       ),
-      $("<div />", { class: 'comment-only-wrapper' }).append(
-        $("<span />", { class: 'commenter-name' }).text(
-          user.firstname + ' ' + user.lastname
-        ),
-        $("<span />", { class: 'commenter-body' }).text(
-          comment.body
-        ),
-        $("<div />", { class: 'comment-likes-count' }).append(
-          $("<i />", { class: 'fas fa-thumbs-up' }),
-        ).text(comment.likes),
-      )
     ),
     $("<div />", { class: "comment-footer" }).append(
       $("<span />", { class: "like-box", onclick: "onLikeButtonClick(event, 'comment')" }).append(
-      ).attr({ id: comment.id }).text(comment.like_status),
+      ).attr({ 'data-id': comment.id, 'data-action': comment.like_status.toLowerCase() }).text(comment.like_status),
       $("<span />").text('.'),
-      $("<span />", { class: "comment-box", onclick: "onCommentClickAjax(event)" }).attr({ belong: 'comment', id: comment.id }).text(
+      $("<span />", { class: "comment-box", onclick: "onCommentClickAjax(event)" }).attr({ 'data-belong': 'comment', 'data-id': comment.id }).text(
         'Comment'
       ),
       $("<span />").text('.'),
       $("<span />").text(comment.created_at),
     ),
-  )
+
+  );
+  return div;
 }
+$(document).click(function(event){
+  if (event.target.id === '#search-results')
+      return false;
+  $("#search-results").hide();
+});

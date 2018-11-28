@@ -34,6 +34,16 @@
     }
   }
 }
+.load-more-comments:hover {
+  background-color: #f2f2f2;
+}
+.load-more-comments {
+  text-align: center;
+  border: 1px solid #616770;
+  color: #616770;
+  border-radius: 3px;
+  cursor: pointer;
+}
 .user-cover-wrapper {
   position: relative;
 }

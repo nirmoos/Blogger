@@ -19,4 +19,31 @@
       </div>
     </div>
   <% end %>
+  <hr>
+  <div class="filter-sort-bottom">
+    <div class="filter-options">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline1" name="filter" value="time" class="custom-control-input" checked="">
+        <label class="custom-control-label" for="customRadioInline1">Time</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline2" name="filter" value="like" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Likes</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline3" name="filter" value="view" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline3">Views</label>
+      </div>
+    </div>
+    <div class="sort-options">
+      <select class="custom-select" id="sortOption">
+        <option value="0">All Time</option>
+        <option value="1">Last Day</option>
+        <option value="7">Past Week</option>
+        <option value="30">Past Month</option>
+        <option value="365">Past Year</option>
+      </select>
+    </div>
+  </div>
+  <hr>
 </section>

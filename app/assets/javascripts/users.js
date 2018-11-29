@@ -1,3 +1,8 @@
+
+
+
+
+
 class Article {
   constructor () {
     this.articles = [];
@@ -5,10 +10,7 @@ class Article {
   }
   updateandRender(event, articles) {
     this.articles = articles;
-    $(".user-page-render-space").empty();
-    for (let article of articles) {
-      renderArticles(article);
-    }
+
   }
 }
 
@@ -42,7 +44,10 @@ const user = new User();
 
 $(document).ready(function() {
   $(".indicator_parent").on("click", function(event) {
-    switch ($(this).attr("data-for")) {
+    var data_for = $(this).attr("data-for");
+    var data_id = $(this).attr("data-id");
+
+    switch (data_for) {
       case 'article':
           url = 'articles.json';
           action = 'article';
@@ -60,30 +65,36 @@ $(document).ready(function() {
           action = 'user';
         break;
       default:
+
     }
     $.ajax({
       method: "GET",
       url: '/' + url,
-      data: { id: $(this).attr("data-id") },
-      success: function (data) {
-        $(".user-page-render-space").empty();
+      data: { id: data_id }
+    })
+    .done(
+      function (data) {
         switch (action) {
           case 'article':
           case 'like':
                       user.updateUserList(data.users);
-                      article.updateandRender(event, data.articles);
+                      $(".user-page-render-space").empty();
+                      for (let article of data.articles) {
+                        $(".user-page-render-space").append(
+                          renderArticles(article)
+                        );
+                      }
                       break;
           case 'user':
-                      $(".user-page-render-space").append(
-                        $("<div />", { class: 'user-list-wrapper' }).append(
-                          data.users.map( user => renderUsers( user ) ),
-                        ),
-                      );
-                      break;
-          default:
+                $(".user-page-render-space").empty();
+                $(".user-page-render-space").append(
+                  $("<div />", { class: 'user-list-wrapper' }).append(
+                    data.users.map( user => renderUsers( user ) ),
+                  ),
+                );
         }
       }
-    });
+    );
   });
 });
 
@@ -134,8 +145,7 @@ function loadMoreComments(event, isFirst) {
   });
 }
 function renderArticles(article) {
-  $(".user-page-render-space").append(
-    $("<section />", { class: "article-list" }).append(
+  let section = $("<section />", { class: "article-list" }).append(
       $("<div />", { class: "article-list-creator" }).append(
         $("<div />", { class: "image-creator-wrapper" }).append(
           $("<div />", { class: "image-wrapper" }).append(
@@ -178,8 +188,8 @@ function renderArticles(article) {
           'data-belong': 'article', 'data-id': article.id
         }).text('Load more comments...') : '',
       ),
-    ),
-  );
+    );
+    return section;
 }
 function createandAppendThisComment(comment, belong) {
   let div = $("<div />", { class: 'comment-wrapper' }).append(
@@ -224,7 +234,6 @@ function createandAppendThisComment(comment, belong) {
 
 
 function renderUsers(user) {
-  console.log("jhjhghg")
   let div = $("<div />", { class: "user-profile-in-list" }).append(
     $("<div />", { class: "user-cover-image" }).append(user.cover_image),
     $("<div />", { class: "user-avatar-in-profile" }).append(user.profile_image),
@@ -232,11 +241,6 @@ function renderUsers(user) {
       $("<div />", { class: "profile-name" }).text(user.firstname + ' ' + user.lastname),
       $("<div />", { class: "profile-email" }).text(user.email),
     ),
-
-    $("<div />", { class: "optional-follow-user-list", onclick: 'followOrBlock(event)' }).attr({
-      'data-action': user.follow_status ? 'Unfollow' : 'Follow',
-      'data-id': user.id,
-    }).text(user.follow_status ? 'Unfollow' : 'Follow'),
     $("<div />", { class: "user-profile-footer" }).append(
       $("<div />", { class: "article-count" }).append(
         $("<div />").text('Articles'),

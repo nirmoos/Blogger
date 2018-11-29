@@ -33,10 +33,10 @@
             <i class="fas fa-rss-square"></i>
           </div>
         </a>
-        <div class="dropdown-menu feed-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<%= allfeed_path %>">All Feed</a>
-          <a class="dropdown-item" href="<%= personelfeed_path %>">Personel Feed</a>
-          <a class="dropdown-item" href="<%= myfeed_path %>">My Feed</a>
+        <div class="dropdown-menu feed-menu feed-wrapper" id="feed-wrapper" aria-labelledby="navbarDropdown">
+          <div class="dropdown-item" data-feed="allfeed" id="all-feed" href="<%= allfeed_path %>">All Feed</div>
+          <div class="dropdown-item" data-feed="personelfeed" id="personel-feed" href="<%= personelfeed_path %>">Personel Feed</div>
+          <div class="dropdown-item" data-feed="myfeed" id="my-feed" href="<%= myfeed_path %>">My Feed</div>
         </div>
       </li>
       <li class="nav-item dropdown">

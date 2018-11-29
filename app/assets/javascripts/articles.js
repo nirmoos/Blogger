@@ -1,7 +1,31 @@
+$(function () {
+  $(".feed-wrapper div").click(function (event) {
+    let filter_option = $(".filter-options input[name='filter']:checked").val();
+    let sort_option = $(".custom-select").val();
+    $.ajax({
+      method: "GET",
+      url: '/' + $(this).data("feed") + '.json',
+      data: {
+        sort_option: sort_option,
+        filter_option: filter_option,
+      },
+      success:
+      function (data) {
+        user.updateUserList(data.users);
+        $(".article-main section:not(:first)").remove();
+        for (let article of data.articles) {
+          $(".article-main").append(
+            renderArticles(article)
+          );
+        }
+      }
+    });
+  });
+});
 
-
-
-
+$(function () {
+  $("#all-feed").click();
+});
 
 function onSearchButtonClick () {
   let text = $('.search-container input').val();

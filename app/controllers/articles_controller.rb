@@ -74,18 +74,46 @@ class ArticlesController < ApplicationController
   end
 
   def allfeed
-    @articles = Article.where({ ispublic: true, is_drafted: false })
-    render 'index'
+    if (fo = params[:fo].to_i) != 0
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ ispublic: true, is_drafted: false })
+    else
+      @articles = Article.where({ ispublic: true, is_drafted: false })
+    end
+    @users = User.where(id: @articles.select(:user_id))
+
+    render 'index.json.jbuilder'
   end
 
   def personelfeed
-    @articles = Article.joins(:user).where(user_id: current_user.following.map(&:id))
-    render 'index'
+    if (fo = params[:fo].to_i) != 0
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false }).where(user_id: current_user.following.map(&:id))
+    else
+      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.following.map(&:id))
+    end
+    @users = User.where(id: @articles.select(:user_id))
+
+    render 'index.json.jbuilder'
   end
 
   def myfeed
-    @articles = current_user.articles
-    render 'index'
+    if (fo = params[:fo].to_i) != 0
+      # p 'FFFFFFFFFFFFFFFOOOOOOOOOOOOOOOOOOO'
+      # p fo
+      # p 'FFFFFFFFFFFFFFFOOOOOOOOOOOOOOOOOOO'
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false, user_id: current_user.id })
+    else
+      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.id)
+    end
+    @users = User.where(id: @articles.select(:user_id))
+
+    # snt = @articles.count
+    # cnt = @users.count
+    # p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+    # p snt
+    # p cnt
+    # p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+
+    render 'index.json.jbuilder'
   end
 
   private

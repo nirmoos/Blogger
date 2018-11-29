@@ -145,7 +145,7 @@
   max-width: 25px;
   border-radius: 12.5px;
 }
-.navbar-ul-li li a {
+.navbar-ul-li li a, .feed-menu > div {
   border-right: 1px solid #294170;
   padding: 0 0 !important;
 }
@@ -172,11 +172,27 @@
 .navbar-ul-li li {
   padding: 0;
 }
-.navbar-ul-li li a div:hover {
+.navbar-ul-li li a div:hover, .feed-menu > div:hover {
   background-color: #294170;
+  cursor: pointer;
   border-radius: 3px;
 }
-.navbar-ul-li li a div {
+.filter-options label {
+  // padding: 0px 10px;
+}
+.filter-options > div {
+  margin-right: 0px;
+  padding-top: 6px;
+}
+.filter-sort-bottom {
+  display: flex;
+  justify-content: space-around;
+}
+#feed-wrapper > div {
+  padding: 0 15px !important;
+  color: #000 !important;
+}
+.navbar-ul-li li a div, .feed-menu > div {
   color: #fff !important;
   padding: 0 15px !important;
 }
@@ -342,7 +358,7 @@ hr {
   width: 95%;
   margin: 0;
 }
-.feed-menu a:hover {
+.feed-menu a:hover, .feed-menu > div:hover {
   background-color: #4267b2;
 }
 .custom-navbar {

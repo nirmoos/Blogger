@@ -20,12 +20,28 @@
 }
 .user-profile-in-list {
   width: 288px;
+  position: relative;
+}
+.optional-follow-user-list:hover {
+  color: #fff;
+  background-color: #657786;
+  border: 1px solid #fff;
+}
+.optional-follow-user-list {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: #fff;
+  padding: 0 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 .user-list-wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 .user-page-render-space {
-  width: 500px;
+  width: 600px;
   margin-left: 200px;
   padding: 5px 10px;
 }

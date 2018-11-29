@@ -14,11 +14,13 @@
         <div class="indicator_parent" data-for="likes" data-id="<%= @user.id %>" ><div class="indicator">Likes</div><div class="all-counter"><%= @user.likes.count %></div></div>
       </div>
       <div class="block-follow-wrapper">
-        <% user_following_action = current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %>
-        <div class="optional-follow"  onclick='followOrBlock(event)' data-action="<%= user_following_action %>" data-id="<%= @user.id %>"><%= user_following_action %></div>
-        <% if current_user.admin? %>
-          <% user_blocked_status = @user.is_blocked?  ? 'Unblock' : 'Block' %>
-          <div class='show-user-option-to-block' onclick='followOrBlock(event)' data-id="<%= @user.id %>" data-action="<%= user_blocked_status %>"><%= user_blocked_status %></div>
+        <% if current_user.id != @user.id %>
+          <% user_following_action = current_user.following.include?(@user) ? 'Unfollow' : 'Follow' %>
+          <div class="optional-follow"  onclick='followOrBlock(event)' data-action="<%= user_following_action %>" data-id="<%= @user.id %>"><%= user_following_action %></div>
+          <% if current_user.admin? %>
+            <% user_blocked_status = @user.is_blocked?  ? 'Unblock' : 'Block' %>
+            <div class='show-user-option-to-block' onclick='followOrBlock(event)' data-id="<%= @user.id %>" data-action="<%= user_blocked_status %>"><%= user_blocked_status %></div>
+          <% end %>
         <% end %>
       </div>
     </div>

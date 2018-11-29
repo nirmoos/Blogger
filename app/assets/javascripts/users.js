@@ -42,10 +42,7 @@ const user = new User();
 
 $(document).ready(function() {
   $(".indicator_parent").on("click", function(event) {
-    var data_for = $(this).attr("data-for");
-    var data_id = $(this).attr("data-id");
-
-    switch (data_for) {
+    switch ($(this).attr("data-for")) {
       case 'article':
           url = 'articles.json';
           action = 'article';
@@ -63,85 +60,36 @@ $(document).ready(function() {
           action = 'user';
         break;
       default:
-
     }
     $.ajax({
       method: "GET",
       url: '/' + url,
-      data: { id: data_id }
-    })
-    .done(
-      function (data) {
+      data: { id: $(this).attr("data-id") },
+      success: function (data) {
+        $(".user-page-render-space").empty();
         switch (action) {
           case 'article':
-          case 'like':user.updateUserList(data.users);
+          case 'like':
+                      user.updateUserList(data.users);
                       article.updateandRender(event, data.articles);
                       break;
-          case 'user':() => {
-                $(".user-page-render-space").append(
-                  $("<div />", { class: 'user-list-wrapper' }).append(
-                    data.users.map( user => renderUsers( user ) ),
-                  ),
-                );
-          }
+          case 'user':
+                      $(".user-page-render-space").append(
+                        $("<div />", { class: 'user-list-wrapper' }).append(
+                          data.users.map( user => renderUsers( user ) ),
+                        ),
+                      );
+                      break;
+          default:
         }
       }
-    );
+    });
   });
 });
 
-// function ajaxCallforDataRendering (event) {
-//   let url;
-//   let action;
-//   switch (event.target.dataset.for) {
-//     case 'article':
-//         url = 'articles.json';
-//         action = 'article';
-//       break;
-//     case 'likes':
-//         url = 'likes.json';
-//         action = 'like';
-//       break;
-//     case 'followers':
-//         url = 'user_followers.json';
-//         action = 'user';
-//       break;
-//     case 'following':
-//         url = 'user_followings.json';
-//         action = 'user';
-//       break;
-//   }
-//   $.ajax({
-//     method: "GET",
-//     url: '/' + url,
-//     data: { id: event.target.dataset.id }
-//   })
-//   .done(function (data) {
-//     switch (event.target.dataset.for) {
-//       case 'article':
-//       case 'like':user.updateUserList(data.users);
-//                   article.updateandRender(event, data.articles);
-//                   break;
-//       case 'user':() => {
-//             $(".user-page-render-space").append(
-//               $("<div />", { class: 'user-list-wrapper' }).append(
-//                 data.users.map( user => renderUsers( user ) ),
-//               ),
-//             );
-//       }
-//     }
-//   })
-// }
-
-// let div_wrapper_for_user_list = $("<div />", { class: 'user-list-wrapper' });
-//
-// for (let user in data.users) {
-//   div_wrapper_for_user_list.append(renderUsers(user));
-// }
-// $(".user-page-render-space").append(div_wrapper_for_user_list);
-
-setTimeout(function(){ $("#first-indicator").click(); }, 1000);
-
+$(function () {
+  $("#first-indicator").click();
+});
 
 function followOrBlock (event) {
   let option = $(event.target).data('action');
@@ -276,6 +224,7 @@ function createandAppendThisComment(comment, belong) {
 
 
 function renderUsers(user) {
+  console.log("jhjhghg")
   let div = $("<div />", { class: "user-profile-in-list" }).append(
     $("<div />", { class: "user-cover-image" }).append(user.cover_image),
     $("<div />", { class: "user-avatar-in-profile" }).append(user.profile_image),
@@ -283,6 +232,11 @@ function renderUsers(user) {
       $("<div />", { class: "profile-name" }).text(user.firstname + ' ' + user.lastname),
       $("<div />", { class: "profile-email" }).text(user.email),
     ),
+
+    $("<div />", { class: "optional-follow-user-list", onclick: 'followOrBlock(event)' }).attr({
+      'data-action': user.follow_status ? 'Unfollow' : 'Follow',
+      'data-id': user.id,
+    }).text(user.follow_status ? 'Unfollow' : 'Follow'),
     $("<div />", { class: "user-profile-footer" }).append(
       $("<div />", { class: "article-count" }).append(
         $("<div />").text('Articles'),

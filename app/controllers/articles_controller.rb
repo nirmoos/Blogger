@@ -75,9 +75,9 @@ class ArticlesController < ApplicationController
 
   def allfeed
     if (fo = params[:fo].to_i) != 0
-      @articles = Article.where("created_at > ? ", fo.days.ago).where({ ispublic: true, is_drafted: false })
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ ispublic: true, is_drafted: false }).order(created_at: :desc)
     else
-      @articles = Article.where({ ispublic: true, is_drafted: false })
+      @articles = Article.where({ ispublic: true, is_drafted: false }).order(created_at: :desc)
     end
     @users = User.where(id: @articles.select(:user_id))
 
@@ -86,9 +86,9 @@ class ArticlesController < ApplicationController
 
   def personelfeed
     if (fo = params[:fo].to_i) != 0
-      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false }).where(user_id: current_user.following.map(&:id))
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false }).where(user_id: current_user.following.map(&:id)).order(created_at: :desc)
     else
-      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.following.map(&:id))
+      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.following.map(&:id)).order(created_at: :desc)
     end
     @users = User.where(id: @articles.select(:user_id))
 
@@ -97,21 +97,11 @@ class ArticlesController < ApplicationController
 
   def myfeed
     if (fo = params[:fo].to_i) != 0
-      # p 'FFFFFFFFFFFFFFFOOOOOOOOOOOOOOOOOOO'
-      # p fo
-      # p 'FFFFFFFFFFFFFFFOOOOOOOOOOOOOOOOOOO'
-      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false, user_id: current_user.id })
+      @articles = Article.where("created_at > ? ", fo.days.ago).where({ is_drafted: false, user_id: current_user.id }).order(created_at: :desc)
     else
-      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.id)
+      @articles = Article.where({ is_drafted: false }).where(user_id: current_user.id).order(created_at: :desc)
     end
     @users = User.where(id: @articles.select(:user_id))
-
-    # snt = @articles.count
-    # cnt = @users.count
-    # p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
-    # p snt
-    # p cnt
-    # p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
 
     render 'index.json.jbuilder'
   end

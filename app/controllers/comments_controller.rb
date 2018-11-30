@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id]);
     comment.update_attributes(is_deleted: false);
 
-    redirect_to root_path
+    render json: { text: comment.body }
   end
 
   def load_comments
@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id]);
     comment.update_attributes(is_deleted: true);
 
-    redirect_to root_path
+    render json: { text: 'Comment is deleted by admin.' }
   end
 
   private

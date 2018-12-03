@@ -1,5 +1,6 @@
 json.comments @comments do |comment|
-  json.(comment, :id, :body, :is_deleted, :user_id)
+  json.(comment, :id, :is_deleted, :user_id)
+  json.body comment.is_deleted ? '[Comment is deleted by admin.]' : comment.body
   json.likes comment.likes.count
   json.created_at time_ago_in_words(comment.created_at) + ' ago'
   json.replies comment.replies.count

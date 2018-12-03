@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id]);
     comment.update_attributes(is_deleted: true);
 
-    render json: { text: 'Comment is deleted by admin.' }
+    render json: { text: '[' + 'Comment is deleted by admin.' + ']' }
   end
 
   private

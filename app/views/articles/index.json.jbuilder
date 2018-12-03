@@ -11,3 +11,5 @@ json.users @users do |user|
   json.(user, :id, :firstname, :lastname, :email)
   json.image user_avatar(current_user.id)
 end
+
+json.is_admin current_user.admin?

@@ -283,6 +283,15 @@ function onArticleSubmit(event) {
     );
   }
 }
+
+$(function () {
+    $('body').on('click', '.likes-comments-counter', function(){
+      event.preventDefault();
+      event.stopPropagation();
+      $(this).siblings('.comment-list').children().click()
+    })
+});
+
 function deleteTagName(event) {
   $(event.target).remove();
 }
@@ -356,15 +365,17 @@ function renderArticles(article) {
       $("<hr />"),
       $("<div />", { class: "likes-comments-counter" }).append(
         $("<div />").text(article.likes + ' ' + 'likes'),
-        $("<div />").text(article.comments + ' ' + 'comments'),
+        $("<div />").append(
+          $("<a />", { href: "#", class: "a-tag-for-comment" }).text(article.comments + ' ' + 'comments'),
+        ),
       ),
       $("<hr />"),
       $("<div />", { class: "article-list-footer" }).append(
-        $("<div />", { class: "article-like", onclick: "onLikeButtonClick(event, 'article')"}).attr({ 'data-id': article.id, 'data-action': article.like_status.toLowerCase() }).append(
+        $("<div />", { class: "article-like", onclick: "onLikeButtonClick(event, 'article')"}).attr({ 'data-id': article.id, 'data-action': article.like_status.toLowerCase() }).text(article.like_status).prepend(
           $("<i />", { class: "far fa-thumbs-up"})
-        ).text(article.like_status),
-        $("<div />", { class: "article-comment", onclick: "onCommentClickAjax(event)" }).attr({ 'data-belong': "article", 'data-id': article.id }).append(
-          $("<i />", { class: "far fa-comment "}).text('Comment')
+        ),
+        $("<div />", { class: "article-comment", onclick: "onCommentClickAjax(event)" }).attr({ 'data-belong': "article", 'data-id': article.id }).text('Comment').prepend(
+          $("<i />", { class: "far fa-comment "})
         )
       ),
       $("<hr />"),
@@ -372,6 +383,11 @@ function renderArticles(article) {
         article.comments ? $("<div />", { class: "load-more-comments", onclick: "loadMoreComments(event, true)" }).attr({
           'data-belong': 'article', 'data-id': article.id
         }).text('Load more comments...') : '',
+      ),
+      user.isUserAdmin(article.user_id) && (
+        $("<span />", { class: "delete-button-for-admin" }).append(
+          $("<i />", { class: 'fas fa-trash' })
+        )
       ),
     );
     return section;
@@ -523,10 +539,12 @@ function deleteThis(event) {
       if (belong == 'comment') {
         if (method == 'DELETE') {
           $(event.target).data("method", 'PUT');
+          $(event.target).parent().parent().siblings().find('.commenter-body').text(data.text);
           $(event.target).text('Undo Delete');
         }
         else {
           $(event.target).data("method", 'DELETE');
+          $(event.target).parent().parent().siblings().find('.commenter-body').text(data.text);
           $(event.target).text('Delete');
 
         }

@@ -34,11 +34,15 @@
     }
   }
 }
+.delete-button-for-admin i {
+  color: #4267b2;
+}
 .load-more-comments:hover {
   background-color: #f2f2f2;
 }
 .load-more-comments {
   text-align: center;
+  display: none;
   border: 1px solid #616770;
   color: #616770;
   border-radius: 3px;
@@ -497,6 +501,9 @@ hr {
 .comment-box, .like-box {
   cursor: pointer;
   color: rgb(54, 88, 153);
+}
+.a-tag-for-comment {
+  color: #606770 !important;
 }
 .article-comment i, .article-like i {
   font-size: 15px;
